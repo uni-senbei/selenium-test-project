@@ -217,4 +217,88 @@ public class SeleniumTest {
             }
         }
     }
+
+    @Test
+    public void testFormSubmissionAndConfirmation() {
+        WebDriver driver = null;
+        try {
+            driver = new ChromeDriver();
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+            // 1. input.html を開く
+            driver.get(FILE_PATH);
+            System.out.println("--- フォーム送信と確認ページテスト開始 ---");
+
+            // 2. フォームにデータを入力
+            WebElement firstNameInput = driver.findElement(By.id("first-name"));
+            String testName = "テスト太郎";
+            firstNameInput.sendKeys(testName);
+
+            WebElement genderMaleRadio = driver.findElement(By.id("radio-a")); // 男性を選択
+            genderMaleRadio.click();
+
+            WebElement interestsPoliticsCheckbox = driver.findElement(By.id("check-a")); // 政治とタイミングを選択
+            interestsPoliticsCheckbox.click();
+            // デフォルトで選択されている「戦略と勢い」はそのまま残す
+
+            // ファイルアップロード (ここではファイル名だけ確認するため、実際のファイルパスを使う)
+            WebElement fileInput = driver.findElement(By.id("image-upload"));
+            File uploadTestFile = new File(UPLOAD_FILE_PATH);
+            if (!uploadTestFile.exists()) {
+                org.junit.Assert.fail("アップロードテスト用のファイルが見つかりません: " + UPLOAD_FILE_PATH);
+            }
+            fileInput.sendKeys(UPLOAD_FILE_PATH);
+            // WebDriverはC:\fakepath\を付加するので、ここでは実際のファイル名が送信されることを期待する
+
+            WebElement msDropdownElement = driver.findElement(By.id("ms-pull-down"));
+            Select msDropdown = new Select(msDropdownElement);
+            String selectedMs = "シャアザク";
+            msDropdown.selectByValue(selectedMs);
+
+            // 3. 送信ボタンをクリック
+            WebElement submitButton = driver.findElement(By.cssSelector("input[type='submit']"));
+            submitButton.click();
+            System.out.println("フォームを送信しました。");
+
+            // 4. confirm.html に遷移したことを確認
+            wait.until(ExpectedConditions.urlContains("confirm.html"));
+            System.out.println("確認ページに遷移しました: " + driver.getCurrentUrl());
+            assertEquals("ページのタイトルが一致しません", "入力内容確認ページ", driver.getTitle().trim());
+
+            // 5. confirm.html 上で入力内容が正しく表示されているか検証
+            WebElement confirmationDetails = driver.findElement(By.id("confirmation-details"));
+
+            // 名前が正しいか検証
+            assertTrue("名前が確認ページに表示されていません", confirmationDetails.getText().contains("名前: " + testName));
+            System.out.println("名前 '" + testName + "' の表示を確認。");
+
+            // 性別が正しいか検証
+            assertTrue("性別が確認ページに表示されていません", confirmationDetails.getText().contains("性別: 男性"));
+            System.out.println("性別 '男性' の表示を確認。");
+
+            // 興味のあることが正しいか検証 (両方選択されていることを確認)
+            assertTrue("興味のあること「政治とタイミング」が表示されていません", confirmationDetails.getText().contains("政治とタイミング"));
+            assertTrue("興味のあること「戦略と勢い」が表示されていません", confirmationDetails.getText().contains("戦略と勢い"));
+            System.out.println("興味のあることの表示を確認。");
+
+            // ファイル名が正しいか検証（C:\fakepath\ は含まれない）
+            String expectedFileName = uploadTestFile.getName(); // 実際のファイル名
+            assertTrue("ファイル名が確認ページに表示されていません", confirmationDetails.getText().contains("アップロードファイル: " + expectedFileName));
+            System.out.println("ファイル '" + expectedFileName + "' の表示を確認。");
+
+            // 好きなモビルスーツが正しいか検証
+            assertTrue("好きなモビルスーツが確認ページに表示されていません", confirmationDetails.getText().contains("好きなモビルスーツ: " + selectedMs));
+            System.out.println("好きなモビルスーツ '" + selectedMs + "' の表示を確認。");
+
+            Thread.sleep(6000); // 確認用に少し待機
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            org.junit.Assert.fail("フォーム送信と確認ページテスト中にエラーが発生しました: " + e.getMessage());
+        } finally {
+            if (driver != null) {
+                driver.quit();
+            }
+        }
+    }
 }

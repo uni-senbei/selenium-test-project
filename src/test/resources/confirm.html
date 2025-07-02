@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>入力内容確認ページ</title>
+</head>
+<body>
+<h1>入力内容の確認</h1>
+<p>以下の内容でよろしいですか？</p>
+
+<div id="confirmation-details">
+</div>
+
+<button onclick="window.history.back()">修正に戻る</button>
+<button onclick="alert('送信を完了しました！')">送信する</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const params = new URLSearchParams(window.location.search);
+        const detailsDiv = document.getElementById('confirmation-details');
+
+        let htmlContent = '<ul>';
+
+        // 名前 (firstName)
+        if (params.has('firstName')) {
+            htmlContent += `<li><strong>名前:</strong> ${params.get('firstName')}</li>`;
+        }
+
+        // 性別 (gender)
+        if (params.has('gender')) {
+            const gender = params.get('gender');
+            htmlContent += `<li><strong>性別:</strong> ${gender === 'male' ? '男性' : '女性'}</li>`;
+        }
+
+        // 興味のあること (interests) ※複数選択の場合を考慮
+        if (params.has('interests')) {
+            const interests = params.getAll('interests'); // getAllで複数の値を配列として取得
+            htmlContent += `<li><strong>興味のあること:</strong> ${interests.join(', ')}</li>`;
+        }
+
+        // ファイル名 (image) - ファイルアップロードはGET送信ではファイル名しか渡せません
+        if (params.has('image')) {
+            // ファイルパス全体が渡されるので、ファイル名だけを抽出（例: C:\fakepath\gihren.jpg -> gihren.jpg）
+            const fullPath = params.get('image');
+            const fileName = fullPath.split(/(\\|\/)/g).pop(); // OSのパス区切り文字に対応
+            htmlContent += `<li><strong>アップロードファイル:</strong> ${fileName}</li>`;
+        }
+
+        // 好きなモビルスーツ (favoriteMS)
+        if (params.has('favoriteMS')) {
+            htmlContent += `<li><strong>好きなモビルスーツ:</strong> ${params.get('favoriteMS')}</li>`;
+        }
+
+        htmlContent += '</ul>';
+        detailsDiv.innerHTML = htmlContent;
+    });
+</script>
+</body>
+</html>
