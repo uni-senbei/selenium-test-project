@@ -20,6 +20,21 @@
         const params = new URLSearchParams(window.location.search);
         const detailsDiv = document.getElementById('confirmation-details');
 
+        // --- 新しく追加・修正する部分 ---
+        // valueと表示テキストのマッピング
+        const interestLabels = {
+            'politics': '政治とタイミング',
+            'strategy': '戦略と勢い',
+            'culture': '文化と歴史'
+        };
+
+        const genderLabels = {
+            'male': '男性',
+            'female': '女性'
+        };
+        // --- 修正終わり ---
+
+
         let htmlContent = '<ul>';
 
         // 名前 (firstName)
@@ -29,26 +44,30 @@
 
         // 性別 (gender)
         if (params.has('gender')) {
-            const gender = params.get('gender');
-            htmlContent += `<li><strong>性別:</strong> ${gender === 'male' ? '男性' : '女性'}</li>`;
+            const genderValue = params.get('gender');
+            // --- 修正: マッピングを使って表示テキストを取得 ---
+            htmlContent += `<li><strong>性別:</strong> ${genderLabels[genderValue] || genderValue}</li>`;
         }
 
         // 興味のあること (interests) ※複数選択の場合を考慮
         if (params.has('interests')) {
-            const interests = params.getAll('interests'); // getAllで複数の値を配列として取得
-            htmlContent += `<li><strong>興味のあること:</strong> ${interests.join(', ')}</li>`;
+            const interestsValues = params.getAll('interests'); // getAllで複数の値を配列として取得
+            // --- 修正: 各valueに対応するラベルテキストに変換 ---
+            const displayInterests = interestsValues.map(value => interestLabels[value] || value);
+            htmlContent += `<li><strong>興味のあること:</strong> ${displayInterests.join(', ')}</li>`;
         }
 
         // ファイル名 (image) - ファイルアップロードはGET送信ではファイル名しか渡せません
         if (params.has('image')) {
-            // ファイルパス全体が渡されるので、ファイル名だけを抽出（例: C:\fakepath\gihren.jpg -> gihren.jpg）
             const fullPath = params.get('image');
-            const fileName = fullPath.split(/(\\|\/)/g).pop(); // OSのパス区切り文字に対応
+            const fileName = fullPath.split(/(\\|\/)/g).pop();
             htmlContent += `<li><strong>アップロードファイル:</strong> ${fileName}</li>`;
         }
 
         // 好きなモビルスーツ (favoriteMS)
         if (params.has('favoriteMS')) {
+            // ドロップダウンリストのvalueと表示テキストは通常同じか、valueは内部的なIDで表示テキストが意味を持つことが多い
+            // 今回はシンプルにvalueをそのまま表示
             htmlContent += `<li><strong>好きなモビルスーツ:</strong> ${params.get('favoriteMS')}</li>`;
         }
 

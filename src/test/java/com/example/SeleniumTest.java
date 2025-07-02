@@ -277,6 +277,12 @@ public class SeleniumTest {
             System.out.println("性別 '男性' の表示を確認。");
 
             // 興味のあることが正しいか検証 (両方選択されていることを確認)
+            // 興味のあることが正しいか検証 (両方選択されていることを確認)
+            // 修正前: (value属性の文字列で検証していた部分)
+            // assertTrue("興味のあること「politics」が表示されていません", confirmationDetails.getText().contains("politics"));
+            // assertTrue("興味のあること「strategy」が表示されていません", confirmationDetails.getText().contains("strategy"));
+
+            // 修正後: <label>タグのテキストで検証
             assertTrue("興味のあること「政治とタイミング」が表示されていません", confirmationDetails.getText().contains("政治とタイミング"));
             assertTrue("興味のあること「戦略と勢い」が表示されていません", confirmationDetails.getText().contains("戦略と勢い"));
             System.out.println("興味のあることの表示を確認。");
