@@ -11,8 +11,17 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 import java.io.File;
-import java.net.MalformedURLException; // ★この行を追加
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.net.MalformedURLException;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
@@ -20,13 +29,10 @@ import static org.junit.Assert.assertTrue;
 
 public class SeleniumTest {
 
-    // Webページ (input.html) へのパスを定数として定義
-    // src/test/resources/input.html に配置することを想定
     private static final String FILE_PATH;
-
-    // ファイルアップロードテストで使用するファイルのパスを定数として定義
-    // src/test/resources/gihren.jpg に配置することを想定
     private static final String UPLOAD_FILE_PATH;
+    private static final String INTERESTS_CSV_PATH = "src/test/resources/interests.csv"; // CSVファイルのパス
+
 
     // static初期化ブロックで定数を設定（プログラム起動時に一度だけ実行）
     static {
@@ -37,19 +43,65 @@ public class SeleniumTest {
         String resolvedUploadPath = null;
 
         try {
-            // input.html のパスを file:// 形式のURLに変換
             resolvedFilePath = new File(inputHtmlRelativePath).toURI().toURL().toString();
-            // ファイルアップロード用に絶対パスを取得
             resolvedUploadPath = new File(uploadFileRelativePath).getAbsolutePath();
         } catch (MalformedURLException e) {
-            // URL変換に失敗した場合の処理
             System.err.println("URL変換エラーが発生しました。ファイルパスを確認してください: " + e.getMessage());
-            // テストが実行できないため、実行時例外をスローして処理を中断
             throw new RuntimeException("テストファイルのURL取得に失敗しました。パス設定を確認してください。", e);
         }
 
         FILE_PATH = resolvedFilePath;
         UPLOAD_FILE_PATH = resolvedUploadPath;
+    }
+
+    /**
+     * CSVの各行を保持するための内部クラス
+     */
+    private static class InterestOption {
+        String value;
+        String label;
+        boolean defaultSelected;
+
+        public InterestOption(String value, String label, boolean defaultSelected) {
+            this.value = value;
+            this.label = label;
+            this.defaultSelected = defaultSelected;
+        }
+
+        // ゲッターメソッド
+        public String getValue() { return value; }
+        public String getLabel() { return label; }
+        public boolean isDefaultSelected() { return defaultSelected; }
+    }
+
+    /**
+     * interests.csvを読み込んでInterestOptionのリストを返すメソッド
+     * @return 読み込んだInterestOptionのリスト
+     */
+    private static List<InterestOption> readInterestsFromCsv() {
+        List<InterestOption> options = new ArrayList<>();
+        File csvFile = new File(INTERESTS_CSV_PATH);
+        if (!csvFile.exists()) {
+            throw new RuntimeException("interests.csvファイルが見つかりません: " + INTERESTS_CSV_PATH);
+        }
+
+        try (Reader in = new FileReader(csvFile)) {
+            CSVParser parser = new CSVParser(in, CSVFormat.DEFAULT.builder()
+                    .setHeader() // ヘッダー行を読み込む
+                    .setSkipHeaderRecord(true) // ヘッダー行をスキップする
+                    .setTrim(true) // 各エントリの空白をトリムする
+                    .build());
+
+            for (CSVRecord record : parser) {
+                String value = record.get("value");
+                String label = record.get("label");
+                boolean defaultSelected = Boolean.parseBoolean(record.get("default_selected"));
+                options.add(new InterestOption(value, label, defaultSelected));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("interests.csvの読み込み中にエラーが発生しました", e);
+        }
+        return options;
     }
 
     @Test
@@ -218,12 +270,16 @@ public class SeleniumTest {
         }
     }
 
+
     @Test
     public void testFormSubmissionAndConfirmation() {
         WebDriver driver = null;
         try {
             driver = new ChromeDriver();
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+            // CSVから興味のあることのオプションを読み込む
+            List<InterestOption> interestsOptions = readInterestsFromCsv();
 
             // 1. input.html を開く
             driver.get(FILE_PATH);
@@ -237,9 +293,27 @@ public class SeleniumTest {
             WebElement genderMaleRadio = driver.findElement(By.id("radio-a")); // 男性を選択
             genderMaleRadio.click();
 
-            WebElement interestsPoliticsCheckbox = driver.findElement(By.id("check-a")); // 政治とタイミングを選択
-            interestsPoliticsCheckbox.click();
-            // デフォルトで選択されている「戦略と勢い」はそのまま残す
+            // 興味のあることのチェックボックスをCSVから読み込んだデータに基づいて操作
+            // 今回は politics と strategy を選択状態にする想定
+            List<String> expectedSelectedInterestsLabels = new ArrayList<>(); // テストで期待する表示ラベル
+            List<String> expectedSelectedInterestsValues = new ArrayList<>(); // テストでクリックするvalue (内部用)
+
+            for (InterestOption option : interestsOptions) {
+                // politics をクリック (value="politics" の場合)
+                if ("politics".equals(option.getValue())) {
+                    WebElement checkbox = driver.findElement(By.id("check-a")); // input.html のidとCSVのvalueを紐付ける必要あり
+                    checkbox.click();
+                    expectedSelectedInterestsLabels.add(option.getLabel());
+                    expectedSelectedInterestsValues.add(option.getValue());
+                }
+                // strategy はデフォルトで選択されているため、ここではクリックしないが、期待値には含める
+                if ("strategy".equals(option.getValue()) && option.isDefaultSelected()) {
+                    // 実際にはクリックしないが、選択されていることを確認するため期待値に追加
+                    expectedSelectedInterestsLabels.add(option.getLabel());
+                    expectedSelectedInterestsValues.add(option.getValue());
+                }
+            }
+
 
             // ファイルアップロード (ここではファイル名だけ確認するため、実際のファイルパスを使う)
             WebElement fileInput = driver.findElement(By.id("image-upload"));
@@ -276,28 +350,18 @@ public class SeleniumTest {
             assertTrue("性別が確認ページに表示されていません", confirmationDetails.getText().contains("性別: 男性"));
             System.out.println("性別 '男性' の表示を確認。");
 
-            // 興味のあることが正しいか検証 (両方選択されていることを確認)
-            // 興味のあることが正しいか検証 (両方選択されていることを確認)
-            // 修正前: (value属性の文字列で検証していた部分)
-            // assertTrue("興味のあること「politics」が表示されていません", confirmationDetails.getText().contains("politics"));
-            // assertTrue("興味のあること「strategy」が表示されていません", confirmationDetails.getText().contains("strategy"));
-
-            // 興味のあることが正しいか検証 (両方選択されていることを確認)
-            assertTrue("興味のあること「政治とタイミング」が表示されていません", confirmationDetails.getText().contains("政治とタイミング"));
-            assertTrue("興味のあること「戦略と勢い」が表示されていません", confirmationDetails.getText().contains("戦略と勢い"));
-
-            // --- 修正: 実際に表示されている「興味のあること」のテキストを取得して表示する ---
-            // confirmationDetails のテキスト全体から「興味のあること: 」の行を抽出する
-            String fullConfirmationText = confirmationDetails.getText();
-            String interestsLine = "";
-            String[] lines = fullConfirmationText.split("\n"); // 改行で分割
-            for (String line : lines) {
-                if (line.contains("興味のあること:")) {
-                    interestsLine = line.trim();
-                    break;
+            // 興味のあることが正しいか検証 (CSVから取得したラベルで検証)
+            String actualInterestsText = ""; // 実際に表示されるテキストを結合する
+            for (String label : expectedSelectedInterestsLabels) {
+                assertTrue("興味のあること「" + label + "」が表示されていません", confirmationDetails.getText().contains(label));
+                // 実際に表示されるテキストも結合して、System.out.printlnで出力できるようにする
+                if (!actualInterestsText.isEmpty()) {
+                    actualInterestsText += ", ";
                 }
+                actualInterestsText += label;
             }
-            System.out.println(interestsLine + " の表示を確認。"); // 例: 興味のあること: 政治とタイミング, 戦略と勢い の表示を確認。
+            System.out.println("興味のあること: " + actualInterestsText + " の表示を確認。");
+
 
             // ファイル名が正しいか検証（C:\fakepath\ は含まれない）
             String expectedFileName = uploadTestFile.getName(); // 実際のファイル名
