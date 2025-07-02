@@ -282,10 +282,22 @@ public class SeleniumTest {
             // assertTrue("興味のあること「politics」が表示されていません", confirmationDetails.getText().contains("politics"));
             // assertTrue("興味のあること「strategy」が表示されていません", confirmationDetails.getText().contains("strategy"));
 
-            // 修正後: <label>タグのテキストで検証
+            // 興味のあることが正しいか検証 (両方選択されていることを確認)
             assertTrue("興味のあること「政治とタイミング」が表示されていません", confirmationDetails.getText().contains("政治とタイミング"));
             assertTrue("興味のあること「戦略と勢い」が表示されていません", confirmationDetails.getText().contains("戦略と勢い"));
-            System.out.println("興味のあることの表示を確認。");
+
+            // --- 修正: 実際に表示されている「興味のあること」のテキストを取得して表示する ---
+            // confirmationDetails のテキスト全体から「興味のあること: 」の行を抽出する
+            String fullConfirmationText = confirmationDetails.getText();
+            String interestsLine = "";
+            String[] lines = fullConfirmationText.split("\n"); // 改行で分割
+            for (String line : lines) {
+                if (line.contains("興味のあること:")) {
+                    interestsLine = line.trim();
+                    break;
+                }
+            }
+            System.out.println(interestsLine + " の表示を確認。"); // 例: 興味のあること: 政治とタイミング, 戦略と勢い の表示を確認。
 
             // ファイル名が正しいか検証（C:\fakepath\ は含まれない）
             String expectedFileName = uploadTestFile.getName(); // 実際のファイル名
