@@ -32,6 +32,8 @@ public class SeleniumTest {
     private static final String FILE_PATH;
     private static final String UPLOAD_FILE_PATH;
     private static final String INTERESTS_CSV_PATH = "src/test/resources/interests.csv"; // CSVファイルのパス
+    private static final String GENDER_CSV_PATH = "src/test/resources/gender.csv"; // ★追加
+    private static final String MS_CSV_PATH = "src/test/resources/favorite_ms.csv"; // ★追加
 
 
     // static初期化ブロックで定数を設定（プログラム起動時に一度だけ実行）
@@ -75,6 +77,40 @@ public class SeleniumTest {
     }
 
     /**
+     * CSVの各行を保持するための内部クラス (gender.csv) ★追加
+     */
+    private static class GenderOption {
+        String value;
+        String label;
+        String id; // ラジオボタンのID
+
+        public GenderOption(String value, String label, String id) {
+            this.value = value;
+            this.label = label;
+            this.id = id;
+        }
+        public String getValue() { return value; }
+        public String getLabel() { return label; }
+        public String getId() { return id; }
+    }
+
+    /**
+     * CSVの各行を保持するための内部クラス (favorite_ms.csv) ★追加
+     */
+    private static class MsOption {
+        String value;
+        String label;
+
+        public MsOption(String value, String label) {
+            this.value = value;
+            this.label = label;
+        }
+        public String getValue() { return value; }
+        public String getLabel() { return label; }
+    }
+
+
+    /**
      * interests.csvを読み込んでInterestOptionのリストを返すメソッド
      * @return 読み込んだInterestOptionのリスト
      */
@@ -100,6 +136,65 @@ public class SeleniumTest {
             }
         } catch (IOException e) {
             throw new RuntimeException("interests.csvの読み込み中にエラーが発生しました", e);
+        }
+        return options;
+    }
+
+    /**
+     * gender.csvを読み込んでGenderOptionのリストを返すメソッド ★追加
+     * @return 読み込んだGenderOptionのリスト
+     */
+    private static List<GenderOption> readGenderFromCsv() {
+        List<GenderOption> options = new ArrayList<>();
+        File csvFile = new File(GENDER_CSV_PATH);
+        if (!csvFile.exists()) {
+            throw new RuntimeException("gender.csvファイルが見つかりません: " + GENDER_CSV_PATH);
+        }
+
+        try (Reader in = new FileReader(csvFile)) {
+            CSVParser parser = new CSVParser(in, CSVFormat.DEFAULT.builder()
+                    .setHeader()
+                    .setSkipHeaderRecord(true)
+                    .setTrim(true)
+                    .build());
+
+            for (CSVRecord record : parser) {
+                String value = record.get("value");
+                String label = record.get("label");
+                String id = record.get("id");
+                options.add(new GenderOption(value, label, id));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("gender.csvの読み込み中にエラーが発生しました", e);
+        }
+        return options;
+    }
+
+    /**
+     * favorite_ms.csvを読み込んでMsOptionのリストを返すメソッド ★追加
+     * @return 読み込んだMsOptionのリスト
+     */
+    private static List<MsOption> readMsFromCsv() {
+        List<MsOption> options = new ArrayList<>();
+        File csvFile = new File(MS_CSV_PATH);
+        if (!csvFile.exists()) {
+            throw new RuntimeException("favorite_ms.csvファイルが見つかりません: " + MS_CSV_PATH);
+        }
+
+        try (Reader in = new FileReader(csvFile)) {
+            CSVParser parser = new CSVParser(in, CSVFormat.DEFAULT.builder()
+                    .setHeader()
+                    .setSkipHeaderRecord(true)
+                    .setTrim(true)
+                    .build());
+
+            for (CSVRecord record : parser) {
+                String value = record.get("value");
+                String label = record.get("label");
+                options.add(new MsOption(value, label));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("favorite_ms.csvの読み込み中にエラーが発生しました", e);
         }
         return options;
     }
@@ -278,8 +373,10 @@ public class SeleniumTest {
             driver = new ChromeDriver();
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-            // CSVから興味のあることのオプションを読み込む
+            // CSVからデータを読み込む
             List<InterestOption> interestsOptions = readInterestsFromCsv();
+            List<GenderOption> genderOptions = readGenderFromCsv(); // ★追加
+            List<MsOption> msOptions = readMsFromCsv(); // ★追加
 
             // 1. input.html を開く
             driver.get(FILE_PATH);
@@ -290,30 +387,36 @@ public class SeleniumTest {
             String testName = "テスト太郎";
             firstNameInput.sendKeys(testName);
 
-            WebElement genderMaleRadio = driver.findElement(By.id("radio-a")); // 男性を選択
-            genderMaleRadio.click();
+            // 性別をCSVから読み込んだデータに基づいて操作 ★修正
+            String selectedGenderLabel = "";
+            for (GenderOption option : genderOptions) {
+                if ("male".equals(option.getValue())) { // 今回は男性を選択
+                    WebElement genderRadio = driver.findElement(By.id(option.getId()));
+                    genderRadio.click();
+                    selectedGenderLabel = option.getLabel(); // 選択した性別のラベルを保持
+                    break;
+                }
+            }
+            // ※ ここではgenderMaleRadio.click();の代わりにCSVから読み込んだデータで操作する
 
             // 興味のあることのチェックボックスをCSVから読み込んだデータに基づいて操作
-            // 今回は politics と strategy を選択状態にする想定
-            List<String> expectedSelectedInterestsLabels = new ArrayList<>(); // テストで期待する表示ラベル
-            List<String> expectedSelectedInterestsValues = new ArrayList<>(); // テストでクリックするvalue (内部用)
+            List<String> expectedSelectedInterestsLabels = new ArrayList<>();
+            List<String> expectedSelectedInterestsValues = new ArrayList<>();
 
             for (InterestOption option : interestsOptions) {
-                // politics をクリック (value="politics" の場合)
                 if ("politics".equals(option.getValue())) {
-                    WebElement checkbox = driver.findElement(By.id("check-a")); // input.html のidとCSVのvalueを紐付ける必要あり
+                    WebElement checkbox = driver.findElement(By.id("check-a"));
                     checkbox.click();
                     expectedSelectedInterestsLabels.add(option.getLabel());
                     expectedSelectedInterestsValues.add(option.getValue());
                 }
-                // strategy はデフォルトで選択されているため、ここではクリックしないが、期待値には含める
                 if ("strategy".equals(option.getValue()) && option.isDefaultSelected()) {
-                    // 実際にはクリックしないが、選択されていることを確認するため期待値に追加
                     expectedSelectedInterestsLabels.add(option.getLabel());
                     expectedSelectedInterestsValues.add(option.getValue());
                 }
             }
-
+           // WebElement genderMaleRadio = driver.findElement(By.id("radio-a")); // 男性を選択
+            //genderMaleRadio.click();
 
             // ファイルアップロード (ここではファイル名だけ確認するため、実際のファイルパスを使う)
             WebElement fileInput = driver.findElement(By.id("image-upload"));
@@ -324,10 +427,23 @@ public class SeleniumTest {
             fileInput.sendKeys(UPLOAD_FILE_PATH);
             // WebDriverはC:\fakepath\を付加するので、ここでは実際のファイル名が送信されることを期待する
 
-            WebElement msDropdownElement = driver.findElement(By.id("ms-pull-down"));
-            Select msDropdown = new Select(msDropdownElement);
-            String selectedMs = "シャアザク";
-            msDropdown.selectByValue(selectedMs);
+            // 好きなモビルスーツをCSVから読み込んだデータに基づいて操作 ★修正
+            String selectedMsLabel = "";
+            for (MsOption option : msOptions) {
+                if ("シャアザク".equals(option.getValue())) { // 今回はシャアザクを選択
+                    WebElement msDropdownElement = driver.findElement(By.id("ms-pull-down"));
+                    Select msDropdown = new Select(msDropdownElement);
+                    msDropdown.selectByValue(option.getValue());
+                    selectedMsLabel = option.getLabel(); // 選択したモビルスーツのラベルを保持
+                    break;
+                }
+            }
+            // ※ ここではmsDropdown.selectByValue(selectedMs);の代わりにCSVから読み込んだデータで操作する
+
+//            WebElement msDropdownElement = driver.findElement(By.id("ms-pull-down"));
+//            Select msDropdown = new Select(msDropdownElement);
+//            String selectedMs = "シャアザク";
+//            msDropdown.selectByValue(selectedMs);
 
             // 3. 送信ボタンをクリック
             WebElement submitButton = driver.findElement(By.cssSelector("input[type='submit']"));
@@ -346,9 +462,13 @@ public class SeleniumTest {
             assertTrue("名前が確認ページに表示されていません", confirmationDetails.getText().contains("名前: " + testName));
             System.out.println("名前 '" + testName + "' の表示を確認。");
 
+            // 性別が正しいか検証 ★修正
+            assertTrue("性別が確認ページに表示されていません", confirmationDetails.getText().contains("性別: " + selectedGenderLabel));
+            System.out.println("性別 '" + selectedGenderLabel + "' の表示を確認。");
+
             // 性別が正しいか検証
-            assertTrue("性別が確認ページに表示されていません", confirmationDetails.getText().contains("性別: 男性"));
-            System.out.println("性別 '男性' の表示を確認。");
+//            assertTrue("性別が確認ページに表示されていません", confirmationDetails.getText().contains("性別: 男性"));
+//            System.out.println("性別 '男性' の表示を確認。");
 
             // 興味のあることが正しいか検証 (CSVから取得したラベルで検証)
             String actualInterestsText = ""; // 実際に表示されるテキストを結合する
@@ -368,9 +488,13 @@ public class SeleniumTest {
             assertTrue("ファイル名が確認ページに表示されていません", confirmationDetails.getText().contains("アップロードファイル: " + expectedFileName));
             System.out.println("ファイル '" + expectedFileName + "' の表示を確認。");
 
+            // 好きなモビルスーツが正しいか検証 ★修正
+            assertTrue("好きなモビルスーツが確認ページに表示されていません", confirmationDetails.getText().contains("好きなモビルスーツ: " + selectedMsLabel));
+            System.out.println("好きなモビルスーツ '" + selectedMsLabel + "' の表示を確認。");
+
             // 好きなモビルスーツが正しいか検証
-            assertTrue("好きなモビルスーツが確認ページに表示されていません", confirmationDetails.getText().contains("好きなモビルスーツ: " + selectedMs));
-            System.out.println("好きなモビルスーツ '" + selectedMs + "' の表示を確認。");
+//            assertTrue("好きなモビルスーツが確認ページに表示されていません", confirmationDetails.getText().contains("好きなモビルスーツ: " + selectedMs));
+//            System.out.println("好きなモビルスーツ '" + selectedMs + "' の表示を確認。");
 
             Thread.sleep(6000); // 確認用に少し待機
 
