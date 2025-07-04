@@ -438,12 +438,6 @@ public class SeleniumTest {
                     break;
                 }
             }
-            // ※ ここではmsDropdown.selectByValue(selectedMs);の代わりにCSVから読み込んだデータで操作する
-
-//            WebElement msDropdownElement = driver.findElement(By.id("ms-pull-down"));
-//            Select msDropdown = new Select(msDropdownElement);
-//            String selectedMs = "シャアザク";
-//            msDropdown.selectByValue(selectedMs);
 
             // 3. 送信ボタンをクリック
             WebElement submitButton = driver.findElement(By.cssSelector("input[type='submit']"));
@@ -466,10 +460,6 @@ public class SeleniumTest {
             assertTrue("性別が確認ページに表示されていません", confirmationDetails.getText().contains("性別: " + selectedGenderLabel));
             System.out.println("性別 '" + selectedGenderLabel + "' の表示を確認。");
 
-            // 性別が正しいか検証
-//            assertTrue("性別が確認ページに表示されていません", confirmationDetails.getText().contains("性別: 男性"));
-//            System.out.println("性別 '男性' の表示を確認。");
-
             // 興味のあることが正しいか検証 (CSVから取得したラベルで検証)
             String actualInterestsText = ""; // 実際に表示されるテキストを結合する
             for (String label : expectedSelectedInterestsLabels) {
@@ -491,10 +481,6 @@ public class SeleniumTest {
             // 好きなモビルスーツが正しいか検証 ★修正
             assertTrue("好きなモビルスーツが確認ページに表示されていません", confirmationDetails.getText().contains("好きなモビルスーツ: " + selectedMsLabel));
             System.out.println("好きなモビルスーツ '" + selectedMsLabel + "' の表示を確認。");
-
-            // 好きなモビルスーツが正しいか検証
-//            assertTrue("好きなモビルスーツが確認ページに表示されていません", confirmationDetails.getText().contains("好きなモビルスーツ: " + selectedMs));
-//            System.out.println("好きなモビルスーツ '" + selectedMs + "' の表示を確認。");
 
             Thread.sleep(6000); // 確認用に少し待機
 

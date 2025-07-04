@@ -4,41 +4,157 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>アンケートフォーム入力ページ</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        form { background: #f9f9f9; padding: 20px; border-radius: 8px; max-width: 500px; margin: auto; }
+        div { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="file"], select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="radio"], input[type="checkbox"] { margin-right: 5px; }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover { background-color: #45a049; }
+    </style>
+    <script src="./surveyData.js"></script>
 </head>
 <body>
     <h1>アンケート</h1>
 
-    <form action="confirm.html" method="GET">
-        <label for="first-name">名前:</label>
-        <input type="text" id="first-name" name="firstName" value=""><br><br>
+    <form action="confirm.html" method="get" enctype="multipart/form-data">
+        <div>
+            <label for="first-name">名前:</label>
+            <input type="text" id="first-name" name="firstName" required>
+        </div>
 
-        <p>性別:</p>
-        <input type="radio" id="radio-a" name="gender" value="male">
-        <label for="radio-a">男性</label><br>
-        <input type="radio" id="radio-b" name="gender" value="female">
-        <label for="radio-b">女性</label><br><br>
+        <div>
+            <label>性別:</label>
+            <div id="gender-options">
+            </div>
+        </div>
 
-        <p>興味のあること:</p>
-        <input type="checkbox" id="check-a" name="interests" value="politics">
-        <label for="check-a">政治とタイミング</label><br>
-        <input type="checkbox" id="check-b" name="interests" value="strategy" checked>
-        <label for="check-b">戦略と勢い</label><br>
-        <input type="checkbox" id="check-c" name="interests" value="culture">
-        <label for="check-c">文化と歴史</label><br><br>
+        <div>
+            <label>興味のあること:</label>
+            <div id="interests-options">
+            </div>
+        </div>
 
-        <label for="image-upload">画像アップロード:</label>
-        <input type="file" id="image-upload" name="image"><br><br>
+        <div>
+            <label for="image-upload">画像をアップロード:</label>
+            <input type="file" id="image-upload" name="image" accept="image/*">
+        </div>
 
-        <label for="ms-pull-down">好きなモビルスーツ:</label>
-        <select id="ms-pull-down" name="favoriteMS">
-            <option value="ガンダム">ガンダム</option>
-            <option value="シャアザク">シャアザク</option>
-            <option value="アッガイ">アッガイ</option>
-            <option value="ゲルググ">ゲルググ</option>
-        </select><br><br>
+        <div>
+            <label for="ms-pull-down">好きなモビルスーツ:</label>
+            <select id="ms-pull-down" name="favoriteMS">
+            </select>
+        </div>
 
-        <input type="submit" value="入力内容を確認">
+        <div>
+            <input type="submit" value="送信">
+        </div>
     </form>
 
+
+    <!--    <form action="confirm.html" method="GET">-->
+<!--        <label for="first-name">名前:</label>-->
+<!--        <input type="text" id="first-name" name="firstName" value=""><br><br>-->
+
+<!--        <p>性別:</p>-->
+<!--        <input type="radio" id="radio-a" name="gender" value="male">-->
+<!--        <label for="radio-a">男性</label><br>-->
+<!--        <input type="radio" id="radio-b" name="gender" value="female">-->
+<!--        <label for="radio-b">女性</label><br><br>-->
+
+<!--        <p>興味のあること:</p>-->
+<!--        <input type="checkbox" id="check-a" name="interests" value="politics">-->
+<!--        <label for="check-a">政治とタイミング</label><br>-->
+<!--        <input type="checkbox" id="check-b" name="interests" value="strategy" checked>-->
+<!--        <label for="check-b">戦略と勢い</label><br>-->
+<!--        <input type="checkbox" id="check-c" name="interests" value="culture">-->
+<!--        <label for="check-c">文化と歴史</label><br><br>-->
+
+<!--        <label for="image-upload">画像アップロード:</label>-->
+<!--        <input type="file" id="image-upload" name="image"><br><br>-->
+
+<!--        <label for="ms-pull-down">好きなモビルスーツ:</label>-->
+<!--        <select id="ms-pull-down" name="favoriteMS">-->
+<!--            <option value="ガンダム">ガンダム</option>-->
+<!--            <option value="シャアザク">シャアザク</option>-->
+<!--            <option value="アッガイ">アッガイ</option>-->
+<!--            <option value="ゲルググ">ゲルググ</option>-->
+<!--        </select><br><br>-->
+
+<!--        <input type="submit" value="入力内容を確認">-->
+<!--    </form>-->
+
+    <script>
+        // DOMContentLoaded イベントで、HTMLの読み込みが完了してからスクリプトを実行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 性別のラジオボタンを生成
+            const genderOptionsDiv = document.getElementById('gender-options');
+            surveyData.gender.forEach(option => {
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.id = option.id; // CSV（JSON）のIDを使用
+                input.name = 'gender';
+                input.value = option.value;
+                input.required = true; // 性別は必須
+
+                const label = document.createElement('label');
+                label.htmlFor = option.id;
+                label.textContent = option.label;
+
+                genderOptionsDiv.appendChild(input);
+                genderOptionsDiv.appendChild(label);
+                genderOptionsDiv.appendChild(document.createElement('br')); // 各オプションの後に改行
+            });
+
+            // 興味のあることのチェックボックスを生成
+            const interestsOptionsDiv = document.getElementById('interests-options');
+            surveyData.interests.forEach(option => {
+                const input = document.createElement('input');
+                input.type = 'checkbox';
+                input.id = `check-${option.value}`; // IDを動的に生成 (例: check-politics)
+                input.name = 'interests';
+                input.value = option.value;
+                if (option.default_selected) {
+                    input.checked = true; // default_selected が true ならチェック済み
+                }
+
+                const label = document.createElement('label');
+                label.htmlFor = `check-${option.value}`;
+                label.textContent = option.label;
+
+                interestsOptionsDiv.appendChild(input);
+                interestsOptionsDiv.appendChild(label);
+                interestsOptionsDiv.appendChild(document.createElement('br'));
+            });
+
+            // 好きなモビルスーツのプルダウン選択肢を生成
+            const msDropdownSelect = document.getElementById('ms-pull-down');
+            surveyData.favoriteMS.forEach(option => {
+                const optElement = document.createElement('option');
+                optElement.value = option.value;
+                optElement.textContent = option.label;
+                msDropdownSelect.appendChild(optElement);
+            });
+        });
+
+        // このコンソールログはそのまま残しておきましょう
+        console.log("input.htmlが読み込まれました。");
+    </script>
 </body>
 </html>
