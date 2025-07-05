@@ -390,7 +390,7 @@ public class SeleniumTest {
             // 性別をCSVから読み込んだデータに基づいて操作 ★修正
             String selectedGenderLabel = "";
             for (GenderOption option : genderOptions) {
-                if ("male".equals(option.getValue())) { // 今回は男性を選択
+                if ("no_answer".equals(option.getValue())) { // 今回は無回答を選択
                     WebElement genderRadio = driver.findElement(By.id(option.getId()));
                     genderRadio.click();
                     selectedGenderLabel = option.getLabel(); // 選択した性別のラベルを保持
@@ -404,12 +404,21 @@ public class SeleniumTest {
             List<String> expectedSelectedInterestsValues = new ArrayList<>();
 
             for (InterestOption option : interestsOptions) {
-                if ("politics".equals(option.getValue())) {
-                    WebElement checkbox = driver.findElement(By.id("check-a"));
+                // "politics" を選択する場合
+                if ("economy".equals(option.getValue())) {
+                    // input.htmlでIDが "check-" + option.value となるように生成されているため、それに合わせる
+                    WebElement checkbox = driver.findElement(By.id("check-" + option.getValue())); // ★修正箇所
                     checkbox.click();
                     expectedSelectedInterestsLabels.add(option.getLabel());
                     expectedSelectedInterestsValues.add(option.getValue());
                 }
+//            for (InterestOption option : interestsOptions) {
+//                if ("politics".equals(option.getValue())) {
+//                    WebElement checkbox = driver.findElement(By.id("check-a"));
+//                    checkbox.click();
+//                    expectedSelectedInterestsLabels.add(option.getLabel());
+//                    expectedSelectedInterestsValues.add(option.getValue());
+//                }
                 if ("strategy".equals(option.getValue()) && option.isDefaultSelected()) {
                     expectedSelectedInterestsLabels.add(option.getLabel());
                     expectedSelectedInterestsValues.add(option.getValue());
@@ -439,10 +448,19 @@ public class SeleniumTest {
                 }
             }
 
+            // 送信ボタンをクリックする前に
+            System.out.println("選択された性別ラベル: " + selectedGenderLabel);
+            WebElement genderInput = driver.findElement(By.cssSelector("input[name='gender']:checked"));
+            System.out.println("送信される性別の値: " + genderInput.getAttribute("value"));
+
             // 3. 送信ボタンをクリック
             WebElement submitButton = driver.findElement(By.cssSelector("input[type='submit']"));
             submitButton.click();
             System.out.println("フォームを送信しました。");
+
+            // 送信後
+            System.out.println("確認ページのURL: " + driver.getCurrentUrl());
+
 
             // 4. confirm.html に遷移したことを確認
             wait.until(ExpectedConditions.urlContains("confirm.html"));
@@ -456,9 +474,19 @@ public class SeleniumTest {
             assertTrue("名前が確認ページに表示されていません", confirmationDetails.getText().contains("名前: " + testName));
             System.out.println("名前 '" + testName + "' の表示を確認。");
 
+            // 性別の検証前に
+            System.out.println("確認ページの実際の内容: " + confirmationDetails.getText());
+            System.out.println("期待される性別の表示: 性別: " + selectedGenderLabel);
+
             // 性別が正しいか検証 ★修正
             assertTrue("性別が確認ページに表示されていません", confirmationDetails.getText().contains("性別: " + selectedGenderLabel));
             System.out.println("性別 '" + selectedGenderLabel + "' の表示を確認。");
+
+            // 性別の検証
+            if (!confirmationDetails.getText().contains("性別: " + selectedGenderLabel)) {
+                System.out.println("性別の表示が見つかりません。表示内容:");
+                System.out.println(confirmationDetails.getText());
+            }
 
             // 興味のあることが正しいか検証 (CSVから取得したラベルで検証)
             String actualInterestsText = ""; // 実際に表示されるテキストを結合する

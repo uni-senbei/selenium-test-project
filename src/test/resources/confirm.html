@@ -4,6 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>入力内容確認ページ</title>
+    <script src="./surveyData.js"></script>
+    <style>
+        /* スタイルは既存のものを維持または調整 */
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1, p { text-align: center; }
+        #confirmation-details {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 500px;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+        }
+        #confirmation-details ul {
+            list-style: none;
+            padding: 0;
+        }
+        #confirmation-details li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:first-of-type {
+            background-color: #6c757d; /* グレー系 */
+            color: white;
+        }
+        button:first-of-type:hover {
+            background-color: #5a6268;
+        }
+        button:last-of-type {
+            background-color: #28a745; /* 緑系 */
+            color: white;
+        }
+        button:last-of-type:hover {
+            background-color: #218838;
+        }
+        .buttons-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 <h1>入力内容の確認</h1>
@@ -20,20 +68,30 @@
         const params = new URLSearchParams(window.location.search);
         const detailsDiv = document.getElementById('confirmation-details');
 
-        // --- 新しく追加・修正する部分 ---
-        // valueと表示テキストのマッピング
-        const interestLabels = {
-            'politics': '政治とタイミング',
-            'strategy': '戦略と勢い',
-            'culture': '文化と歴史'
-        };
+        // ヘルパー関数: value に対応する label を surveyData から検索
+        // surveyData.js が読み込まれていることを前提とする
+        function getLabelByValue(dataArray, valueToFind) {
+        console.log('Looking for value:', valueToFind, 'in array:', dataArray);
+            // dataArrayが配列であり、valueToFindが存在する場合のみ検索
+            if (Array.isArray(dataArray) && valueToFind) {
+                const foundItem = dataArray.find(item => item.value === valueToFind);
+                console.log('Found item:', foundItem);
+                return foundItem ? foundItem.label : valueToFind; // 見つかればlabel、なければvalueをそのまま返す
+            }
+            return valueToFind; // dataArrayが不正かvalueToFindがなければvalueをそのまま返す
+        }
 
-        const genderLabels = {
-            'male': '男性',
-            'female': '女性'
-        };
-        // --- 修正終わり ---
+<!--        // valueと表示テキストのマッピング-->
+<!--        const interestLabels = {-->
+<!--            'politics': '政治とタイミング',-->
+<!--            'strategy': '戦略と勢い',-->
+<!--            'culture': '文化と歴史'-->
+<!--        };-->
 
+<!--        const genderLabels = {-->
+<!--            'male': '男性',-->
+<!--            'female': '女性'-->
+<!--        };-->
 
         let htmlContent = '<ul>';
 
@@ -45,17 +103,40 @@
         // 性別 (gender)
         if (params.has('gender')) {
             const genderValue = params.get('gender');
-            // --- 修正: マッピングを使って表示テキストを取得 ---
-            htmlContent += `<li><strong>性別:</strong> ${genderLabels[genderValue] || genderValue}</li>`;
+            console.log('Gender value from URL:', genderValue);
+            console.log('surveyData.gender:', surveyData.gender);
+        // surveyData.gender からラベルを取得
+            const displayGender = getLabelByValue(surveyData.gender, genderValue);
+            console.log('Processing gender value:', genderValue);
+            console.log('Display gender value:', displayGender);
+            htmlContent += `<li><strong>性別:</strong> ${displayGender || genderValue}</li>`;
+            console.log('Generated HTML for gender:', `<li><strong>性別:</strong> ${displayGender}</li>`);
+        } else {
+            console.log('No gender parameter found in URL');
         }
 
         // 興味のあること (interests) ※複数選択の場合を考慮
         if (params.has('interests')) {
             const interestsValues = params.getAll('interests'); // getAllで複数の値を配列として取得
-            // --- 修正: 各valueに対応するラベルテキストに変換 ---
-            const displayInterests = interestsValues.map(value => interestLabels[value] || value);
-            htmlContent += `<li><strong>興味のあること:</strong> ${displayInterests.join(', ')}</li>`;
+            // surveyData.interests から各valueに対応するラベルテキストに変換
+            const displayInterests = interestsValues.map(value => getLabelByValue(surveyData.interests, value));
+            htmlContent += `<li><strong>興味のあること:</strong> ${displayInterests.join(', ') || '未選択'}</li>`;
         }
+
+<!--        // 性別 (gender)-->
+<!--        if (params.has('gender')) {-->
+<!--            const genderValue = params.get('gender');-->
+<!--            // -&#45;&#45; 修正: マッピングを使って表示テキストを取得 -&#45;&#45;-->
+<!--            htmlContent += `<li><strong>性別:</strong> ${genderLabels[genderValue] || genderValue}</li>`;-->
+<!--        }-->
+
+<!--        // 興味のあること (interests) ※複数選択の場合を考慮-->
+<!--        if (params.has('interests')) {-->
+<!--            const interestsValues = params.getAll('interests'); // getAllで複数の値を配列として取得-->
+<!--            // -&#45;&#45; 修正: 各valueに対応するラベルテキストに変換 -&#45;&#45;-->
+<!--            const displayInterests = interestsValues.map(value => interestLabels[value] || value);-->
+<!--            htmlContent += `<li><strong>興味のあること:</strong> ${displayInterests.join(', ')}</li>`;-->
+<!--        }-->
 
         // ファイル名 (image) - ファイルアップロードはGET送信ではファイル名しか渡せません
         if (params.has('image')) {
@@ -66,13 +147,23 @@
 
         // 好きなモビルスーツ (favoriteMS)
         if (params.has('favoriteMS')) {
-            // ドロップダウンリストのvalueと表示テキストは通常同じか、valueは内部的なIDで表示テキストが意味を持つことが多い
-            // 今回はシンプルにvalueをそのまま表示
-            htmlContent += `<li><strong>好きなモビルスーツ:</strong> ${params.get('favoriteMS')}</li>`;
+            const favoriteMSValue = params.get('favoriteMS');
+            // surveyData.favoriteMS からラベルを取得
+            const displayFavoriteMS = getLabelByValue(surveyData.favoriteMS, favoriteMSValue);
+            htmlContent += `<li><strong>好きなモビルスーツ:</strong> ${displayFavoriteMS || favoriteMSValue}</li>`;
         }
+
+<!--        // 好きなモビルスーツ (favoriteMS)-->
+<!--        if (params.has('favoriteMS')) {-->
+<!--            // ドロップダウンリストのvalueと表示テキストは通常同じか、valueは内部的なIDで表示テキストが意味を持つことが多い-->
+<!--            // 今回はシンプルにvalueをそのまま表示-->
+<!--            htmlContent += `<li><strong>好きなモビルスーツ:</strong> ${params.get('favoriteMS')}</li>`;-->
+<!--        }-->
 
         htmlContent += '</ul>';
         detailsDiv.innerHTML = htmlContent;
+
+        console.log("confirm.htmlが読み込まれました。");
     });
 </script>
 </body>

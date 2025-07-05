@@ -3,12 +3,15 @@ const surveyData = {
     interests: [
         { "value": "politics", "label": "政治とタイミング", "default_selected": false },
         { "value": "strategy", "label": "戦略と勢い", "default_selected": true },
-        { "value": "culture", "label": "文化と歴史", "default_selected": false }
+        { "value": "culture", "label": "文化と歴史", "default_selected": false },
+        { "value": "economy", "label": "経済と未来", "default_selected": false }
     ],
     gender: [
-        { "value": "male", "label": "男性", "id": "radio-a" },
-        { "value": "female", "label": "女性", "id": "radio-b" }
+        { "value": "male", "label": "メンズ", "id": "radio-a" },
+        { "value": "female", "label": "レディース", "id": "radio-b" },
+        { "value": "no_answer", "label": "答えない", "id": "radio-c" }  // 最後のカンマは任意
     ],
+
     favoriteMS: [
         { "value": "シャアザク", "label": "シャアザク" },
         { "value": "グフ", "label": "グフ" },

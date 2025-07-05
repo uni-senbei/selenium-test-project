@@ -2,3 +2,4 @@ value,label,default_selected
 politics,政治とタイミング,false
 strategy,戦略と勢い,true
 culture,文化と歴史,false
+economy,経済と未来,false

@@ -1,3 +1,4 @@
 value,label,id
-male,男性,radio-a
-female,女性,radio-b
+male,メンズ,radio-a
+female,レディース,radio-b
+no_answer,答えない,radio-c
