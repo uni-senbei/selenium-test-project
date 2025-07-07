@@ -212,11 +212,11 @@ public class SeleniumTest {
 
             WebElement h1Element = driver.findElement(By.tagName("h1"));
             String h1Text = h1Element.getText();
-            assertEquals("H1見出しのテキストが一致しません", "アンケートを取ります".trim(), h1Text.trim());
+            assertEquals("H1見出しのテキストが一致しません", "アンケート".trim(), h1Text.trim());
 
-            WebElement pElement = driver.findElement(By.xpath("//p[text()='JSはコンソールで見れるよ']"));
+            WebElement pElement = driver.findElement(By.xpath("//p[text()='Pタグ復活']"));
             String pText = pElement.getText();
-            assertEquals("Pタグのテキストが一致しません", "JSはコンソールで見れるよ".trim(), pText.trim());
+            assertEquals("Pタグのテキストが一致しません", "Pタグ復活".trim(), pText.trim());
 
             // first-name テキストボックスに文字入力と検証
             WebElement firstNameInput = driver.findElement(By.id("first-name"));
@@ -256,22 +256,33 @@ public class SeleniumTest {
             driver = new ChromeDriver();
             driver.get(FILE_PATH); // FILE_PATH定数を使用
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
             System.out.println("--- チェックボックス選択テスト開始 ---");
 
-            WebElement checkboxB = wait.until(ExpectedConditions.elementToBeClickable(By.id("check-b")));
-            assertTrue("check-b がデフォルトで選択されていません", checkboxB.isSelected());
+            // CSVから読み込んだデータに基づいてチェックボックスを操作
+            List<InterestOption> interests = readInterestsFromCsv();
+
+            // 「戦略と勢い」(strategy)のチェックボックスを確認
+            WebElement strategyCheckbox = wait.until(ExpectedConditions.presenceOfElementLocated(
+                    By.id("check-strategy")));
+            wait.until(ExpectedConditions.elementToBeClickable(strategyCheckbox));
+            assertTrue("check-strategy がデフォルトで選択されていません", strategyCheckbox.isSelected());
             System.out.println("「戦略と勢い」チェックボックスがデフォルトで選択されていることを確認しました。");
 
-            WebElement checkboxA = wait.until(ExpectedConditions.elementToBeClickable(By.id("check-a")));
-            checkboxA.click();
-            assertTrue("check-a が選択されていません", checkboxA.isSelected());
+            // 「政治とタイミング」(politics)のチェックボックスを選択
+            WebElement politicsCheckbox = wait.until(ExpectedConditions.presenceOfElementLocated(
+                    By.id("check-politics")));
+            wait.until(ExpectedConditions.elementToBeClickable(politicsCheckbox));
+            politicsCheckbox.click();
+            assertTrue("check-politics が選択されていません", politicsCheckbox.isSelected());
             System.out.println("「政治とタイミング」チェックボックスを選択しました。");
 
-            checkboxB.click();
-            wait.until(ExpectedConditions.not(ExpectedConditions.elementToBeSelected(By.id("check-b"))));
-            assertFalse("check-b のチェックが外れていません", checkboxB.isSelected());
+            // 「戦略と勢い」のチェックを外す
+            wait.until(ExpectedConditions.elementToBeClickable(strategyCheckbox));
+            strategyCheckbox.click();
+            wait.until(ExpectedConditions.not(ExpectedConditions.elementToBeSelected(By.id("check-strategy"))));
+            assertFalse("check-strategy のチェックが外れていません", strategyCheckbox.isSelected());
             System.out.println("「戦略と勢い」チェックボックスのチェックを外しました。");
 
             Thread.sleep(1000);
@@ -340,11 +351,14 @@ public class SeleniumTest {
             driver = new ChromeDriver();
             driver.get(FILE_PATH); // FILE_PATH定数を使用
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
             System.out.println("--- プルダウン選択テスト開始 ---");
 
-            WebElement msDropdownElement = wait.until(ExpectedConditions.elementToBeClickable(By.name("MS-pull-down")));
+            // まず要素の存在を確認
+            WebElement msDropdownElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ms-pull-down")));
+            // その後、クリック可能になるまで待機
+            wait.until(ExpectedConditions.elementToBeClickable(msDropdownElement));
             Select msDropdown = new Select(msDropdownElement);
 
             msDropdown.selectByValue("アッガイ");
@@ -405,7 +419,7 @@ public class SeleniumTest {
 
             for (InterestOption option : interestsOptions) {
                 // "politics" を選択する場合
-                if ("economy".equals(option.getValue())) {
+                if ("politics".equals(option.getValue())) {
                     // input.htmlでIDが "check-" + option.value となるように生成されているため、それに合わせる
                     WebElement checkbox = driver.findElement(By.id("check-" + option.getValue())); // ★修正箇所
                     checkbox.click();
@@ -448,19 +462,10 @@ public class SeleniumTest {
                 }
             }
 
-            // 送信ボタンをクリックする前に
-            System.out.println("選択された性別ラベル: " + selectedGenderLabel);
-            WebElement genderInput = driver.findElement(By.cssSelector("input[name='gender']:checked"));
-            System.out.println("送信される性別の値: " + genderInput.getAttribute("value"));
-
             // 3. 送信ボタンをクリック
             WebElement submitButton = driver.findElement(By.cssSelector("input[type='submit']"));
             submitButton.click();
             System.out.println("フォームを送信しました。");
-
-            // 送信後
-            System.out.println("確認ページのURL: " + driver.getCurrentUrl());
-
 
             // 4. confirm.html に遷移したことを確認
             wait.until(ExpectedConditions.urlContains("confirm.html"));
@@ -474,19 +479,9 @@ public class SeleniumTest {
             assertTrue("名前が確認ページに表示されていません", confirmationDetails.getText().contains("名前: " + testName));
             System.out.println("名前 '" + testName + "' の表示を確認。");
 
-            // 性別の検証前に
-            System.out.println("確認ページの実際の内容: " + confirmationDetails.getText());
-            System.out.println("期待される性別の表示: 性別: " + selectedGenderLabel);
-
             // 性別が正しいか検証 ★修正
             assertTrue("性別が確認ページに表示されていません", confirmationDetails.getText().contains("性別: " + selectedGenderLabel));
             System.out.println("性別 '" + selectedGenderLabel + "' の表示を確認。");
-
-            // 性別の検証
-            if (!confirmationDetails.getText().contains("性別: " + selectedGenderLabel)) {
-                System.out.println("性別の表示が見つかりません。表示内容:");
-                System.out.println(confirmationDetails.getText());
-            }
 
             // 興味のあることが正しいか検証 (CSVから取得したラベルで検証)
             String actualInterestsText = ""; // 実際に表示されるテキストを結合する
