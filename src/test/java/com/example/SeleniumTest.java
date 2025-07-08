@@ -2,7 +2,8 @@ package com.example;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType; // 追加
+import org.openqa.selenium.TakesScreenshot; // 追加
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,6 +19,8 @@ import java.net.MalformedURLException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID; // 追加
+import org.apache.commons.io.FileUtils; // 追加
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -198,6 +201,32 @@ public class SeleniumTest {
         }
         return options;
     }
+
+    /**
+     * テスト失敗時にスクリーンショットを撮るヘルパーメソッド
+     * @param driver WebDriverインスタンス
+     * @param testName スクリーンショットファイル名に含めるテスト名
+     */
+    private void takeScreenshot(WebDriver driver, String testName) {
+        if (driver instanceof TakesScreenshot) {
+            File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            try {
+                // スクリーンショットを保存するディレクトリを作成
+                File screenshotDir = new File("target/screenshots");
+                if (!screenshotDir.exists()) {
+                    screenshotDir.mkdirs();
+                }
+                // 一意のファイル名を生成 (テスト名 + タイムスタンプ + UUID)
+                String fileName = testName + "_" + System.currentTimeMillis() + "_" + UUID.randomUUID().toString().substring(0, 8) + ".png";
+                File destFile = new File(screenshotDir, fileName);
+                FileUtils.copyFile(screenshot, destFile);
+                System.err.println("スクリーンショットを保存しました: " + destFile.getAbsolutePath());
+            } catch (IOException e) {
+                System.err.println("スクリーンショットの保存に失敗しました: " + e.getMessage());
+            }
+        }
+    }
+
 
     @Test
     public void testFormInputAndRadioButtons() {
@@ -508,6 +537,8 @@ public class SeleniumTest {
             Thread.sleep(6000); // 確認用に少し待機
 
         } catch (Exception e) {
+            // テスト失敗時にスクリーンショットを撮る
+            takeScreenshot(driver, "testFormSubmissionAndConfirmation");
             e.printStackTrace();
             org.junit.Assert.fail("フォーム送信と確認ページテスト中にエラーが発生しました: " + e.getMessage());
         } finally {
