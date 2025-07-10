@@ -230,9 +230,8 @@ public class SeleniumTest {
 
     @Test
     public void testFormInputAndRadioButtons() {
-        WebDriver driver = null;
+        WebDriver driver = new ChromeDriver(); // ★修正: 初期化をtryブロックの前に移動
         try {
-            driver = new ChromeDriver();
             driver.get(FILE_PATH); // FILE_PATH定数を使用
 
             // ページのタイトル、H1、Pタグの検証
@@ -268,9 +267,10 @@ public class SeleniumTest {
 
             Thread.sleep(1000); // 各テストメソッド内のsleepは短くしました
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            org.junit.Assert.fail("テスト中にエラーが発生しました: " + e.getMessage());
+        } catch (Throwable t) { // ★修正: ExceptionをThrowableに変更
+            takeScreenshot(driver, "testFormInputAndRadioButtons");
+            t.printStackTrace();
+            org.junit.Assert.fail("テスト中にエラーが発生しました: " + t.getMessage()); // ★修正: メッセージにt.getMessage()を追加
         } finally {
             if (driver != null) {
                 driver.quit(); // driverを閉じる
@@ -280,9 +280,8 @@ public class SeleniumTest {
 
     @Test
     public void testCheckboxes() {
-        WebDriver driver = null;
+        WebDriver driver = new ChromeDriver(); // ★修正: 初期化をtryブロックの前に移動
         try {
-            driver = new ChromeDriver();
             driver.get(FILE_PATH); // FILE_PATH定数を使用
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
@@ -316,9 +315,10 @@ public class SeleniumTest {
 
             Thread.sleep(1000);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            org.junit.Assert.fail("テスト中にエラーが発生しました: " + e.getMessage());
+        } catch (Throwable t) { // ★修正: ExceptionをThrowableに変更
+            takeScreenshot(driver, "testCheckboxes");
+            t.printStackTrace();
+            org.junit.Assert.fail("テスト中にエラーが発生しました: " + t.getMessage()); // ★修正: メッセージにt.getMessage()を追加
         } finally {
             if (driver != null) {
                 driver.quit();
@@ -329,9 +329,8 @@ public class SeleniumTest {
 
     @Test
     public void testFileUpload() {
-        WebDriver driver = null;
+        WebDriver driver = new ChromeDriver(); // ★修正: 初期化をtryブロックの前に移動
         try {
-            driver = new ChromeDriver();
             driver.get(FILE_PATH); // FILE_PATH定数を使用
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -363,9 +362,10 @@ public class SeleniumTest {
 
             Thread.sleep(3000);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            org.junit.Assert.fail("ファイルアップロードテスト中にエラーが発生しました: " + e.getMessage());
+        } catch (Throwable t) { // ★修正: ExceptionをThrowableに変更
+            takeScreenshot(driver, "testFileUpload");
+            t.printStackTrace();
+            org.junit.Assert.fail("ファイルアップロードテスト中にエラーが発生しました: " + t.getMessage()); // ★修正: メッセージにt.getMessage()を追加
         } finally {
             if (driver != null) {
                 driver.quit();
@@ -375,9 +375,8 @@ public class SeleniumTest {
 
     @Test
     public void testDropdown() {
-        WebDriver driver = null;
+        WebDriver driver = new ChromeDriver(); // ★修正: 初期化をtryブロックの前に移動
         try {
-            driver = new ChromeDriver();
             driver.get(FILE_PATH); // FILE_PATH定数を使用
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
@@ -398,9 +397,10 @@ public class SeleniumTest {
 
             Thread.sleep(1000);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            org.junit.Assert.fail("テスト中にエラーが発生しました: " + e.getMessage());
+        } catch (Throwable t) { // ★修正: ExceptionをThrowableに変更
+            takeScreenshot(driver, "testDropdown");
+            t.printStackTrace();
+            org.junit.Assert.fail("テスト中にエラーが発生しました: " + t.getMessage()); // ★修正: メッセージにt.getMessage()を追加
         } finally {
             if (driver != null) {
                 driver.quit();
@@ -411,9 +411,8 @@ public class SeleniumTest {
 
     @Test
     public void testFormSubmissionAndConfirmation() {
-        WebDriver driver = null;
+        WebDriver driver = new ChromeDriver(); // ★修正: 初期化をtryブロックの前に移動
         try {
-            driver = new ChromeDriver();
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
             // CSVからデータを読み込む
@@ -467,7 +466,7 @@ public class SeleniumTest {
                     expectedSelectedInterestsValues.add(option.getValue());
                 }
             }
-           // WebElement genderMaleRadio = driver.findElement(By.id("radio-a")); // 男性を選択
+            // WebElement genderMaleRadio = driver.findElement(By.id("radio-a")); // 男性を選択
             //genderMaleRadio.click();
 
             // ファイルアップロード (ここではファイル名だけ確認するため、実際のファイルパスを使う)
@@ -536,11 +535,10 @@ public class SeleniumTest {
 
             Thread.sleep(6000); // 確認用に少し待機
 
-        } catch (Exception e) {
-            // テスト失敗時にスクリーンショットを撮る
+        } catch (Throwable t) { // ★修正: ExceptionをThrowableに変更
             takeScreenshot(driver, "testFormSubmissionAndConfirmation");
-            e.printStackTrace();
-            org.junit.Assert.fail("フォーム送信と確認ページテスト中にエラーが発生しました: " + e.getMessage());
+            t.printStackTrace();
+            org.junit.Assert.fail("フォーム送信と確認ページテスト中にエラーが発生しました: " + t.getMessage()); // ★修正: メッセージにt.getMessage()を追加
         } finally {
             if (driver != null) {
                 driver.quit();
