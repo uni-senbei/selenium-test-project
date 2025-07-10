@@ -2,8 +2,8 @@ package com.example;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType; // 追加
-import org.openqa.selenium.TakesScreenshot; // 追加
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -19,8 +19,8 @@ import java.net.MalformedURLException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID; // 追加
-import org.apache.commons.io.FileUtils; // 追加
+import java.util.UUID;
+import org.apache.commons.io.FileUtils;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -34,15 +34,15 @@ public class SeleniumTest {
 
     private static final String FILE_PATH;
     private static final String UPLOAD_FILE_PATH;
-    private static final String INTERESTS_CSV_PATH = "src/test/resources/interests.csv"; // CSVファイルのパス
-    private static final String GENDER_CSV_PATH = "src/test/resources/gender.csv"; // ★追加
-    private static final String MS_CSV_PATH = "src/test/resources/favorite_ms.csv"; // ★追加
+    private static final String INTERESTS_CSV_PATH = "src/test/resources/interests.csv";
+    private static final String GENDER_CSV_PATH = "src/test/resources/gender.csv";
+    private static final String MS_CSV_PATH = "src/test/resources/favorite_ms.csv";
 
 
     // static初期化ブロックで定数を設定（プログラム起動時に一度だけ実行）
     static {
         String inputHtmlRelativePath = "src/test/resources/input.html"; // input.htmlの相対パス
-        String uploadFileRelativePath = "src/test/resources/gihren.jpg"; // gihren.jpgの相対パス（★ご自身のファイル名に合わせる）
+        String uploadFileRelativePath = "src/test/resources/gihren.jpg"; // gihren.jpgの相対パス
 
         String resolvedFilePath = null;
         String resolvedUploadPath = null;
@@ -80,12 +80,12 @@ public class SeleniumTest {
     }
 
     /**
-     * CSVの各行を保持するための内部クラス (gender.csv) ★追加
+     * CSVの各行を保持するための内部クラス (gender.csv)
      */
     private static class GenderOption {
         String value;
         String label;
-        String id; // ラジオボタンのID
+        String id;
 
         public GenderOption(String value, String label, String id) {
             this.value = value;
@@ -98,7 +98,7 @@ public class SeleniumTest {
     }
 
     /**
-     * CSVの各行を保持するための内部クラス (favorite_ms.csv) ★追加
+     * CSVの各行を保持するための内部クラス (favorite_ms.csv)
      */
     private static class MsOption {
         String value;
@@ -117,18 +117,20 @@ public class SeleniumTest {
      * interests.csvを読み込んでInterestOptionのリストを返すメソッド
      * @return 読み込んだInterestOptionのリスト
      */
-    private static List<InterestOption> readInterestsFromCsv() {
+    // static修飾子を削除 ★修正
+    private List<InterestOption> readInterestsFromCsv() {
         List<InterestOption> options = new ArrayList<>();
         File csvFile = new File(INTERESTS_CSV_PATH);
         if (!csvFile.exists()) {
-            throw new RuntimeException("interests.csvファイルが見つかりません: " + INTERESTS_CSV_PATH);
+            // RuntimeExceptionからorg.junit.Assert.failに変更 ★修正
+            org.junit.Assert.fail("interests.csvファイルが見つかりません: " + INTERESTS_CSV_PATH);
         }
 
         try (Reader in = new FileReader(csvFile)) {
             CSVParser parser = new CSVParser(in, CSVFormat.DEFAULT.builder()
-                    .setHeader() // ヘッダー行を読み込む
-                    .setSkipHeaderRecord(true) // ヘッダー行をスキップする
-                    .setTrim(true) // 各エントリの空白をトリムする
+                    .setHeader()
+                    .setSkipHeaderRecord(true)
+                    .setTrim(true)
                     .build());
 
             for (CSVRecord record : parser) {
@@ -138,20 +140,23 @@ public class SeleniumTest {
                 options.add(new InterestOption(value, label, defaultSelected));
             }
         } catch (IOException e) {
-            throw new RuntimeException("interests.csvの読み込み中にエラーが発生しました", e);
+            // RuntimeExceptionからorg.junit.Assert.failに変更 ★修正
+            org.junit.Assert.fail("interests.csvの読み込み中にエラーが発生しました: " + e.getMessage());
         }
         return options;
     }
 
     /**
-     * gender.csvを読み込んでGenderOptionのリストを返すメソッド ★追加
+     * gender.csvを読み込んでGenderOptionのリストを返すメソッド
      * @return 読み込んだGenderOptionのリスト
      */
-    private static List<GenderOption> readGenderFromCsv() {
+    // static修飾子を削除 ★修正
+    private List<GenderOption> readGenderFromCsv() {
         List<GenderOption> options = new ArrayList<>();
         File csvFile = new File(GENDER_CSV_PATH);
         if (!csvFile.exists()) {
-            throw new RuntimeException("gender.csvファイルが見つかりません: " + GENDER_CSV_PATH);
+            // RuntimeExceptionからorg.junit.Assert.failに変更 ★修正
+            org.junit.Assert.fail("gender.csvファイルが見つかりません: " + GENDER_CSV_PATH);
         }
 
         try (Reader in = new FileReader(csvFile)) {
@@ -168,20 +173,23 @@ public class SeleniumTest {
                 options.add(new GenderOption(value, label, id));
             }
         } catch (IOException e) {
-            throw new RuntimeException("gender.csvの読み込み中にエラーが発生しました", e);
+            // RuntimeExceptionからorg.junit.Assert.failに変更 ★修正
+            org.junit.Assert.fail("gender.csvの読み込み中にエラーが発生しました: " + e.getMessage());
         }
         return options;
     }
 
     /**
-     * favorite_ms.csvを読み込んでMsOptionのリストを返すメソッド ★追加
+     * favorite_ms.csvを読み込んでMsOptionのリストを返すメソッド
      * @return 読み込んだMsOptionのリスト
      */
-    private static List<MsOption> readMsFromCsv() {
+    // static修飾子を削除 ★修正
+    private List<MsOption> readMsFromCsv() {
         List<MsOption> options = new ArrayList<>();
         File csvFile = new File(MS_CSV_PATH);
         if (!csvFile.exists()) {
-            throw new RuntimeException("favorite_ms.csvファイルが見つかりません: " + MS_CSV_PATH);
+            // RuntimeExceptionからorg.junit.Assert.failに変更 ★修正
+            org.junit.Assert.fail("favorite_ms.csvファイルが見つかりません: " + MS_CSV_PATH);
         }
 
         try (Reader in = new FileReader(csvFile)) {
@@ -197,7 +205,8 @@ public class SeleniumTest {
                 options.add(new MsOption(value, label));
             }
         } catch (IOException e) {
-            throw new RuntimeException("favorite_ms.csvの読み込み中にエラーが発生しました", e);
+            // RuntimeExceptionからorg.junit.Assert.failに変更 ★修正
+            org.junit.Assert.fail("favorite_ms.csvの読み込み中にエラーが発生しました: " + e.getMessage());
         }
         return options;
     }
@@ -230,9 +239,9 @@ public class SeleniumTest {
 
     @Test
     public void testFormInputAndRadioButtons() {
-        WebDriver driver = new ChromeDriver(); // ★修正: 初期化をtryブロックの前に移動
+        WebDriver driver = new ChromeDriver();
         try {
-            driver.get(FILE_PATH); // FILE_PATH定数を使用
+            driver.get(FILE_PATH);
 
             // ページのタイトル、H1、Pタグの検証
             String pageTitle = driver.getTitle();
@@ -265,24 +274,24 @@ public class SeleniumTest {
             assertTrue("「はい」ラジオボタンが選択されていません", radioA.isSelected());
             System.out.println("「はい」ラジオボタンが選択されていることを確認しました。");
 
-            Thread.sleep(1000); // 各テストメソッド内のsleepは短くしました
+            Thread.sleep(1000);
 
-        } catch (Throwable t) { // ★修正: ExceptionをThrowableに変更
+        } catch (Throwable t) {
             takeScreenshot(driver, "testFormInputAndRadioButtons");
             t.printStackTrace();
-            org.junit.Assert.fail("テスト中にエラーが発生しました: " + t.getMessage()); // ★修正: メッセージにt.getMessage()を追加
+            org.junit.Assert.fail("テスト中にエラーが発生しました: " + t.getMessage());
         } finally {
             if (driver != null) {
-                driver.quit(); // driverを閉じる
+                driver.quit();
             }
         }
     }
 
     @Test
     public void testCheckboxes() {
-        WebDriver driver = new ChromeDriver(); // ★修正: 初期化をtryブロックの前に移動
+        WebDriver driver = new ChromeDriver();
         try {
-            driver.get(FILE_PATH); // FILE_PATH定数を使用
+            driver.get(FILE_PATH);
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
@@ -315,10 +324,10 @@ public class SeleniumTest {
 
             Thread.sleep(1000);
 
-        } catch (Throwable t) { // ★修正: ExceptionをThrowableに変更
+        } catch (Throwable t) {
             takeScreenshot(driver, "testCheckboxes");
             t.printStackTrace();
-            org.junit.Assert.fail("テスト中にエラーが発生しました: " + t.getMessage()); // ★修正: メッセージにt.getMessage()を追加
+            org.junit.Assert.fail("テスト中にエラーが発生しました: " + t.getMessage());
         } finally {
             if (driver != null) {
                 driver.quit();
@@ -329,9 +338,9 @@ public class SeleniumTest {
 
     @Test
     public void testFileUpload() {
-        WebDriver driver = new ChromeDriver(); // ★修正: 初期化をtryブロックの前に移動
+        WebDriver driver = new ChromeDriver();
         try {
-            driver.get(FILE_PATH); // FILE_PATH定数を使用
+            driver.get(FILE_PATH);
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
@@ -349,7 +358,7 @@ public class SeleniumTest {
             WebElement fileInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("image")));
 
             // 3. ファイルの絶対パスを sendKeys() で入力する
-            fileInput.sendKeys(UPLOAD_FILE_PATH); // UPLOAD_FILE_PATH定数を使用
+            fileInput.sendKeys(UPLOAD_FILE_PATH);
             System.out.println("ファイル '" + file.getName() + "' を選択しました。");
 
             // 4. (オプション) ファイルが選択されたことを検証する
@@ -362,10 +371,10 @@ public class SeleniumTest {
 
             Thread.sleep(3000);
 
-        } catch (Throwable t) { // ★修正: ExceptionをThrowableに変更
+        } catch (Throwable t) {
             takeScreenshot(driver, "testFileUpload");
             t.printStackTrace();
-            org.junit.Assert.fail("ファイルアップロードテスト中にエラーが発生しました: " + t.getMessage()); // ★修正: メッセージにt.getMessage()を追加
+            org.junit.Assert.fail("ファイルアップロードテスト中にエラーが発生しました: " + t.getMessage());
         } finally {
             if (driver != null) {
                 driver.quit();
@@ -375,9 +384,9 @@ public class SeleniumTest {
 
     @Test
     public void testDropdown() {
-        WebDriver driver = new ChromeDriver(); // ★修正: 初期化をtryブロックの前に移動
+        WebDriver driver = new ChromeDriver();
         try {
-            driver.get(FILE_PATH); // FILE_PATH定数を使用
+            driver.get(FILE_PATH);
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
@@ -397,10 +406,10 @@ public class SeleniumTest {
 
             Thread.sleep(1000);
 
-        } catch (Throwable t) { // ★修正: ExceptionをThrowableに変更
+        } catch (Throwable t) {
             takeScreenshot(driver, "testDropdown");
             t.printStackTrace();
-            org.junit.Assert.fail("テスト中にエラーが発生しました: " + t.getMessage()); // ★修正: メッセージにt.getMessage()を追加
+            org.junit.Assert.fail("テスト中にエラーが発生しました: " + t.getMessage());
         } finally {
             if (driver != null) {
                 driver.quit();
@@ -411,14 +420,14 @@ public class SeleniumTest {
 
     @Test
     public void testFormSubmissionAndConfirmation() {
-        WebDriver driver = new ChromeDriver(); // ★修正: 初期化をtryブロックの前に移動
+        WebDriver driver = new ChromeDriver();
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
             // CSVからデータを読み込む
-            List<InterestOption> interestsOptions = readInterestsFromCsv();
-            List<GenderOption> genderOptions = readGenderFromCsv(); // ★追加
-            List<MsOption> msOptions = readMsFromCsv(); // ★追加
+            List<InterestOption> interestsOptions = readInterestsFromCsv(); // ★修正: static呼び出しからインスタンス呼び出しへ
+            List<GenderOption> genderOptions = readGenderFromCsv();     // ★修正: static呼び出しからインスタンス呼び出しへ
+            List<MsOption> msOptions = readMsFromCsv();                 // ★修正: static呼び出しからインスタンス呼び出しへ
 
             // 1. input.html を開く
             driver.get(FILE_PATH);
@@ -432,10 +441,10 @@ public class SeleniumTest {
             // 性別をCSVから読み込んだデータに基づいて操作 ★修正
             String selectedGenderLabel = "";
             for (GenderOption option : genderOptions) {
-                if ("no_answer".equals(option.getValue())) { // 今回は無回答を選択
+                if ("no_answer".equals(option.getValue())) {
                     WebElement genderRadio = driver.findElement(By.id(option.getId()));
                     genderRadio.click();
-                    selectedGenderLabel = option.getLabel(); // 選択した性別のラベルを保持
+                    selectedGenderLabel = option.getLabel();
                     break;
                 }
             }
@@ -449,25 +458,16 @@ public class SeleniumTest {
                 // "politics" を選択する場合
                 if ("politics".equals(option.getValue())) {
                     // input.htmlでIDが "check-" + option.value となるように生成されているため、それに合わせる
-                    WebElement checkbox = driver.findElement(By.id("check-" + option.getValue())); // ★修正箇所
+                    WebElement checkbox = driver.findElement(By.id("check-" + option.getValue()));
                     checkbox.click();
                     expectedSelectedInterestsLabels.add(option.getLabel());
                     expectedSelectedInterestsValues.add(option.getValue());
                 }
-//            for (InterestOption option : interestsOptions) {
-//                if ("politics".equals(option.getValue())) {
-//                    WebElement checkbox = driver.findElement(By.id("check-a"));
-//                    checkbox.click();
-//                    expectedSelectedInterestsLabels.add(option.getLabel());
-//                    expectedSelectedInterestsValues.add(option.getValue());
-//                }
                 if ("strategy".equals(option.getValue()) && option.isDefaultSelected()) {
                     expectedSelectedInterestsLabels.add(option.getLabel());
                     expectedSelectedInterestsValues.add(option.getValue());
                 }
             }
-            // WebElement genderMaleRadio = driver.findElement(By.id("radio-a")); // 男性を選択
-            //genderMaleRadio.click();
 
             // ファイルアップロード (ここではファイル名だけ確認するため、実際のファイルパスを使う)
             WebElement fileInput = driver.findElement(By.id("image-upload"));
@@ -478,14 +478,14 @@ public class SeleniumTest {
             fileInput.sendKeys(UPLOAD_FILE_PATH);
             // WebDriverはC:\fakepath\を付加するので、ここでは実際のファイル名が送信されることを期待する
 
-            // 好きなモビルスーツをCSVから読み込んだデータに基づいて操作 ★修正
+            // 好きなモビルスーツをCSVから読み込んだデータに基づいて操作
             String selectedMsLabel = "";
             for (MsOption option : msOptions) {
-                if ("シャアザク".equals(option.getValue())) { // 今回はシャアザクを選択
+                if ("シャアザク".equals(option.getValue())) {
                     WebElement msDropdownElement = driver.findElement(By.id("ms-pull-down"));
                     Select msDropdown = new Select(msDropdownElement);
                     msDropdown.selectByValue(option.getValue());
-                    selectedMsLabel = option.getLabel(); // 選択したモビルスーツのラベルを保持
+                    selectedMsLabel = option.getLabel();
                     break;
                 }
             }
@@ -501,20 +501,28 @@ public class SeleniumTest {
             assertEquals("ページのタイトルが一致しません", "入力内容確認ページ", driver.getTitle().trim());
 
             // 5. confirm.html 上で入力内容が正しく表示されているか検証
-            WebElement confirmationDetails = driver.findElement(By.id("confirmation-details"));
+            // ★修正: wait.untilで要素の存在を待機し、getText()で内容を取得
+            WebElement confirmationDetails = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("confirmation-details")));
+            String actualText = confirmationDetails.getText(); // ★追加: 確認ページの全テキスト内容を取得
+            System.out.println("確認ページの実際の内容:\n" + actualText); // ★追加: 取得した内容をコンソールに出力
 
             // 名前が正しいか検証
-            assertTrue("名前が確認ページに表示されていません", confirmationDetails.getText().contains("名前: " + testName));
+            assertTrue("名前が確認ページに表示されていません", actualText.contains("名前: " + testName)); // ★修正: actualTextを使用
             System.out.println("名前 '" + testName + "' の表示を確認。");
 
-            // 性別が正しいか検証 ★修正
-            assertTrue("性別が確認ページに表示されていません", confirmationDetails.getText().contains("性別: " + selectedGenderLabel));
+            // テスト失敗時のスクリーンショット取得確認のため、名前が正しくない検証を残す
+//            assertTrue("名前が確認ページに表示されていません", actualText.contains("名前： " + testName)); // 「：」を全角に変更
+//            System.out.println("名前 '" + testName + "' の表示を確認。");
+
+
+            // 性別が正しいか検証
+            assertTrue("性別が確認ページに表示されていません", actualText.contains("性別: " + selectedGenderLabel)); // ★修正: actualTextを使用
             System.out.println("性別 '" + selectedGenderLabel + "' の表示を確認。");
 
             // 興味のあることが正しいか検証 (CSVから取得したラベルで検証)
-            String actualInterestsText = ""; // 実際に表示されるテキストを結合する
+            String actualInterestsText = "";
             for (String label : expectedSelectedInterestsLabels) {
-                assertTrue("興味のあること「" + label + "」が表示されていません", confirmationDetails.getText().contains(label));
+                assertTrue("興味のあること「" + label + "」が表示されていません", actualText.contains(label)); // ★修正: actualTextを使用
                 // 実際に表示されるテキストも結合して、System.out.printlnで出力できるようにする
                 if (!actualInterestsText.isEmpty()) {
                     actualInterestsText += ", ";
@@ -523,22 +531,21 @@ public class SeleniumTest {
             }
             System.out.println("興味のあること: " + actualInterestsText + " の表示を確認。");
 
-
             // ファイル名が正しいか検証（C:\fakepath\ は含まれない）
-            String expectedFileName = uploadTestFile.getName(); // 実際のファイル名
-            assertTrue("ファイル名が確認ページに表示されていません", confirmationDetails.getText().contains("アップロードファイル: " + expectedFileName));
+            String expectedFileName = uploadTestFile.getName();
+            assertTrue("ファイル名が確認ページに表示されていません", actualText.contains("アップロードファイル: " + expectedFileName)); // ★修正: actualTextを使用
             System.out.println("ファイル '" + expectedFileName + "' の表示を確認。");
 
-            // 好きなモビルスーツが正しいか検証 ★修正
-            assertTrue("好きなモビルスーツが確認ページに表示されていません", confirmationDetails.getText().contains("好きなモビルスーツ: " + selectedMsLabel));
+            // 好きなモビルスーツが正しいか検証
+            assertTrue("好きなモビルスーツが確認ページに表示されていません", actualText.contains("好きなモビルスーツ: " + selectedMsLabel)); // ★修正: actualTextを使用
             System.out.println("好きなモビルスーツ '" + selectedMsLabel + "' の表示を確認。");
 
-            Thread.sleep(6000); // 確認用に少し待機
+            Thread.sleep(6000);
 
-        } catch (Throwable t) { // ★修正: ExceptionをThrowableに変更
+        } catch (Throwable t) {
             takeScreenshot(driver, "testFormSubmissionAndConfirmation");
             t.printStackTrace();
-            org.junit.Assert.fail("フォーム送信と確認ページテスト中にエラーが発生しました: " + t.getMessage()); // ★修正: メッセージにt.getMessage()を追加
+            org.junit.Assert.fail("フォーム送信と確認ページテスト中にエラーが発生しました: " + t.getMessage());
         } finally {
             if (driver != null) {
                 driver.quit();
