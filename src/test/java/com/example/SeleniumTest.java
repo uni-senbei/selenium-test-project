@@ -1,5 +1,7 @@
 package com.example;
 
+import org.junit.After; // @After アノテーションのために追加
+import org.junit.Before; // @Before アノテーションのために追加
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -38,6 +40,8 @@ public class SeleniumTest {
     private static final String GENDER_CSV_PATH = "src/test/resources/gender.csv";
     private static final String MS_CSV_PATH = "src/test/resources/favorite_ms.csv";
 
+    // WebDriverインスタンスをクラスフィールドとして宣言 ★ここから修正
+    private WebDriver driver;
 
     // static初期化ブロックで定数を設定（プログラム起動時に一度だけ実行）
     static {
@@ -117,12 +121,10 @@ public class SeleniumTest {
      * interests.csvを読み込んでInterestOptionのリストを返すメソッド
      * @return 読み込んだInterestOptionのリスト
      */
-    // static修飾子を削除 ★修正
     private List<InterestOption> readInterestsFromCsv() {
         List<InterestOption> options = new ArrayList<>();
         File csvFile = new File(INTERESTS_CSV_PATH);
         if (!csvFile.exists()) {
-            // RuntimeExceptionからorg.junit.Assert.failに変更 ★修正
             org.junit.Assert.fail("interests.csvファイルが見つかりません: " + INTERESTS_CSV_PATH);
         }
 
@@ -140,7 +142,6 @@ public class SeleniumTest {
                 options.add(new InterestOption(value, label, defaultSelected));
             }
         } catch (IOException e) {
-            // RuntimeExceptionからorg.junit.Assert.failに変更 ★修正
             org.junit.Assert.fail("interests.csvの読み込み中にエラーが発生しました: " + e.getMessage());
         }
         return options;
@@ -150,12 +151,10 @@ public class SeleniumTest {
      * gender.csvを読み込んでGenderOptionのリストを返すメソッド
      * @return 読み込んだGenderOptionのリスト
      */
-    // static修飾子を削除 ★修正
     private List<GenderOption> readGenderFromCsv() {
         List<GenderOption> options = new ArrayList<>();
         File csvFile = new File(GENDER_CSV_PATH);
         if (!csvFile.exists()) {
-            // RuntimeExceptionからorg.junit.Assert.failに変更 ★修正
             org.junit.Assert.fail("gender.csvファイルが見つかりません: " + GENDER_CSV_PATH);
         }
 
@@ -173,7 +172,6 @@ public class SeleniumTest {
                 options.add(new GenderOption(value, label, id));
             }
         } catch (IOException e) {
-            // RuntimeExceptionからorg.junit.Assert.failに変更 ★修正
             org.junit.Assert.fail("gender.csvの読み込み中にエラーが発生しました: " + e.getMessage());
         }
         return options;
@@ -183,12 +181,10 @@ public class SeleniumTest {
      * favorite_ms.csvを読み込んでMsOptionのリストを返すメソッド
      * @return 読み込んだMsOptionのリスト
      */
-    // static修飾子を削除 ★修正
     private List<MsOption> readMsFromCsv() {
         List<MsOption> options = new ArrayList<>();
         File csvFile = new File(MS_CSV_PATH);
         if (!csvFile.exists()) {
-            // RuntimeExceptionからorg.junit.Assert.failに変更 ★修正
             org.junit.Assert.fail("favorite_ms.csvファイルが見つかりません: " + MS_CSV_PATH);
         }
 
@@ -205,7 +201,6 @@ public class SeleniumTest {
                 options.add(new MsOption(value, label));
             }
         } catch (IOException e) {
-            // RuntimeExceptionからorg.junit.Assert.failに変更 ★修正
             org.junit.Assert.fail("favorite_ms.csvの読み込み中にエラーが発生しました: " + e.getMessage());
         }
         return options;
@@ -236,12 +231,28 @@ public class SeleniumTest {
         }
     }
 
+    // 各テストメソッド実行前にWebDriverを初期化するメソッド ★ここから修正
+    @Before
+    public void setup() {
+        driver = new ChromeDriver();
+        // 必要に応じて、ここで最大化やタイムアウトの設定も行えます
+        // driver.manage().window().maximize();
+        // driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+    }
+
+    // 各テストメソッド実行後にWebDriverを終了するメソッド ★ここから修正
+    @After
+    public void teardown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 
     @Test
     public void testFormInputAndRadioButtons() {
-        WebDriver driver = new ChromeDriver();
+        // WebDriver driver = new ChromeDriver(); // 削除 ★修正
         try {
-            driver.get(FILE_PATH);
+            driver.get(FILE_PATH); // driverがクラスフィールドになったため、宣言なしでアクセス可能
 
             // ページのタイトル、H1、Pタグの検証
             String pageTitle = driver.getTitle();
@@ -276,20 +287,17 @@ public class SeleniumTest {
 
             Thread.sleep(1000);
 
-        } catch (Throwable t) {
+        } catch (Throwable t) { // 例外発生時もdriverは存在するため、スクリーンショット取得可能
             takeScreenshot(driver, "testFormInputAndRadioButtons");
             t.printStackTrace();
             org.junit.Assert.fail("テスト中にエラーが発生しました: " + t.getMessage());
-        } finally {
-            if (driver != null) {
-                driver.quit();
-            }
         }
+        // finally ブロックを削除し、driver.quit() は @After に移動 ★修正
     }
 
     @Test
     public void testCheckboxes() {
-        WebDriver driver = new ChromeDriver();
+        // WebDriver driver = new ChromeDriver(); // 削除 ★修正
         try {
             driver.get(FILE_PATH);
 
@@ -328,17 +336,14 @@ public class SeleniumTest {
             takeScreenshot(driver, "testCheckboxes");
             t.printStackTrace();
             org.junit.Assert.fail("テスト中にエラーが発生しました: " + t.getMessage());
-        } finally {
-            if (driver != null) {
-                driver.quit();
-            }
         }
+        // finally ブロックを削除し、driver.quit() は @After に移動 ★修正
     }
 
 
     @Test
     public void testFileUpload() {
-        WebDriver driver = new ChromeDriver();
+        // WebDriver driver = new ChromeDriver(); // 削除 ★修正
         try {
             driver.get(FILE_PATH);
 
@@ -375,16 +380,13 @@ public class SeleniumTest {
             takeScreenshot(driver, "testFileUpload");
             t.printStackTrace();
             org.junit.Assert.fail("ファイルアップロードテスト中にエラーが発生しました: " + t.getMessage());
-        } finally {
-            if (driver != null) {
-                driver.quit();
-            }
         }
+        // finally ブロックを削除し、driver.quit() は @After に移動 ★修正
     }
 
     @Test
     public void testDropdown() {
-        WebDriver driver = new ChromeDriver();
+        // WebDriver driver = new ChromeDriver(); // 削除 ★修正
         try {
             driver.get(FILE_PATH);
 
@@ -410,24 +412,21 @@ public class SeleniumTest {
             takeScreenshot(driver, "testDropdown");
             t.printStackTrace();
             org.junit.Assert.fail("テスト中にエラーが発生しました: " + t.getMessage());
-        } finally {
-            if (driver != null) {
-                driver.quit();
-            }
         }
+        // finally ブロックを削除し、driver.quit() は @After に移動 ★修正
     }
 
 
     @Test
     public void testFormSubmissionAndConfirmation() {
-        WebDriver driver = new ChromeDriver();
+        // WebDriver driver = new ChromeDriver(); // 削除 ★修正
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
             // CSVからデータを読み込む
-            List<InterestOption> interestsOptions = readInterestsFromCsv(); // ★修正: static呼び出しからインスタンス呼び出しへ
-            List<GenderOption> genderOptions = readGenderFromCsv();     // ★修正: static呼び出しからインスタンス呼び出しへ
-            List<MsOption> msOptions = readMsFromCsv();                 // ★修正: static呼び出しからインスタンス呼び出しへ
+            List<InterestOption> interestsOptions = readInterestsFromCsv();
+            List<GenderOption> genderOptions = readGenderFromCsv();
+            List<MsOption> msOptions = readMsFromCsv();
 
             // 1. input.html を開く
             driver.get(FILE_PATH);
@@ -438,7 +437,7 @@ public class SeleniumTest {
             String testName = "テスト太郎";
             firstNameInput.sendKeys(testName);
 
-            // 性別をCSVから読み込んだデータに基づいて操作 ★修正
+            // 性別をCSVから読み込んだデータに基づいて操作
             String selectedGenderLabel = "";
             for (GenderOption option : genderOptions) {
                 if ("no_answer".equals(option.getValue())) {
@@ -448,7 +447,6 @@ public class SeleniumTest {
                     break;
                 }
             }
-            // ※ ここではgenderMaleRadio.click();の代わりにCSVから読み込んだデータで操作する
 
             // 興味のあることのチェックボックスをCSVから読み込んだデータに基づいて操作
             List<String> expectedSelectedInterestsLabels = new ArrayList<>();
@@ -476,7 +474,6 @@ public class SeleniumTest {
                 org.junit.Assert.fail("アップロードテスト用のファイルが見つかりません: " + UPLOAD_FILE_PATH);
             }
             fileInput.sendKeys(UPLOAD_FILE_PATH);
-            // WebDriverはC:\fakepath\を付加するので、ここでは実際のファイル名が送信されることを期待する
 
             // 好きなモビルスーツをCSVから読み込んだデータに基づいて操作
             String selectedMsLabel = "";
@@ -501,29 +498,27 @@ public class SeleniumTest {
             assertEquals("ページのタイトルが一致しません", "入力内容確認ページ", driver.getTitle().trim());
 
             // 5. confirm.html 上で入力内容が正しく表示されているか検証
-            // ★修正: wait.untilで要素の存在を待機し、getText()で内容を取得
             WebElement confirmationDetails = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("confirmation-details")));
-            String actualText = confirmationDetails.getText(); // ★追加: 確認ページの全テキスト内容を取得
-            System.out.println("確認ページの実際の内容:\n" + actualText); // ★追加: 取得した内容をコンソールに出力
+            String actualText = confirmationDetails.getText();
+            System.out.println("確認ページの実際の内容:\n" + actualText);
 
             // 名前が正しいか検証
-            assertTrue("名前が確認ページに表示されていません", actualText.contains("名前: " + testName)); // ★修正: actualTextを使用
+            assertTrue("名前が確認ページに表示されていません", actualText.contains("名前: " + testName));
             System.out.println("名前 '" + testName + "' の表示を確認。");
 
             // テスト失敗時のスクリーンショット取得確認のため、名前が正しくない検証を残す
-//            assertTrue("名前が確認ページに表示されていません", actualText.contains("名前： " + testName)); // 「：」を全角に変更
-//            System.out.println("名前 '" + testName + "' の表示を確認。");
+//             assertTrue("名前が確認ページに表示されていません", actualText.contains("名前： " + testName)); // 「：」を全角に変更
+//             System.out.println("名前 '" + testName + "' の表示を確認。");
 
 
             // 性別が正しいか検証
-            assertTrue("性別が確認ページに表示されていません", actualText.contains("性別: " + selectedGenderLabel)); // ★修正: actualTextを使用
+            assertTrue("性別が確認ページに表示されていません", actualText.contains("性別: " + selectedGenderLabel));
             System.out.println("性別 '" + selectedGenderLabel + "' の表示を確認。");
 
             // 興味のあることが正しいか検証 (CSVから取得したラベルで検証)
             String actualInterestsText = "";
             for (String label : expectedSelectedInterestsLabels) {
-                assertTrue("興味のあること「" + label + "」が表示されていません", actualText.contains(label)); // ★修正: actualTextを使用
-                // 実際に表示されるテキストも結合して、System.out.printlnで出力できるようにする
+                assertTrue("興味のあること「" + label + "」が表示されていません", actualText.contains(label));
                 if (!actualInterestsText.isEmpty()) {
                     actualInterestsText += ", ";
                 }
@@ -533,23 +528,20 @@ public class SeleniumTest {
 
             // ファイル名が正しいか検証（C:\fakepath\ は含まれない）
             String expectedFileName = uploadTestFile.getName();
-            assertTrue("ファイル名が確認ページに表示されていません", actualText.contains("アップロードファイル: " + expectedFileName)); // ★修正: actualTextを使用
+            assertTrue("ファイル名が確認ページに表示されていません", actualText.contains("アップロードファイル: " + expectedFileName));
             System.out.println("ファイル '" + expectedFileName + "' の表示を確認。");
 
             // 好きなモビルスーツが正しいか検証
-            assertTrue("好きなモビルスーツが確認ページに表示されていません", actualText.contains("好きなモビルスーツ: " + selectedMsLabel)); // ★修正: actualTextを使用
+            assertTrue("好きなモビルスーツが確認ページに表示されていません", actualText.contains("好きなモビルスーツ: " + selectedMsLabel));
             System.out.println("好きなモビルスーツ '" + selectedMsLabel + "' の表示を確認。");
 
             Thread.sleep(6000);
 
-        } catch (Throwable t) {
+        } catch (Throwable t) { // Exception e から Throwable t に変更
             takeScreenshot(driver, "testFormSubmissionAndConfirmation");
             t.printStackTrace();
             org.junit.Assert.fail("フォーム送信と確認ページテスト中にエラーが発生しました: " + t.getMessage());
-        } finally {
-            if (driver != null) {
-                driver.quit();
-            }
         }
+        // finally ブロックを削除し、driver.quit() は @After に移動 ★修正
     }
 }
