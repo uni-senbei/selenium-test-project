@@ -1,7 +1,7 @@
 package com.example;
 
-import org.junit.After; // @After アノテーションのために追加
-import org.junit.Before; // @Before アノテーションのために追加
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -9,6 +9,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver; // ★追加: FirefoxDriverのためにインポート
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -18,7 +19,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.net.MalformedURLException;
-import java.time.Duration;
+import java.time.Duration; // Durationクラスのためにインポート
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -40,13 +41,16 @@ public class SeleniumTest {
     private static final String GENDER_CSV_PATH = "src/test/resources/gender.csv";
     private static final String MS_CSV_PATH = "src/test/resources/favorite_ms.csv";
 
-    // WebDriverインスタンスをクラスフィールドとして宣言 ★ここから修正
     private WebDriver driver;
+    private WebDriverWait wait; // WebDriverWaitインスタンスをフィールドとして保持
+
+    // ★追加：ブラウザごとのデフォルト待機時間を設定するための変数
+    private Duration defaultWaitDuration;
 
     // static初期化ブロックで定数を設定（プログラム起動時に一度だけ実行）
     static {
-        String inputHtmlRelativePath = "src/test/resources/input.html"; // input.htmlの相対パス
-        String uploadFileRelativePath = "src/test/resources/gihren.jpg"; // gihren.jpgの相対パス
+        String inputHtmlRelativePath = "src/test/resources/input.html";
+        String uploadFileRelativePath = "src/test/resources/gihren.jpg";
 
         String resolvedFilePath = null;
         String resolvedUploadPath = null;
@@ -55,7 +59,7 @@ public class SeleniumTest {
             resolvedFilePath = new File(inputHtmlRelativePath).toURI().toURL().toString();
             resolvedUploadPath = new File(uploadFileRelativePath).getAbsolutePath();
         } catch (MalformedURLException e) {
-            System.err.println("URL変換エラーが発生しました。ファイルパスを確認してください: " + e.getMessage());
+            System.out.println("URL変換エラーが発生しました。ファイルパスを確認してください: " + e.getMessage()); // System.err.printlnから変更
             throw new RuntimeException("テストファイルのURL取得に失敗しました。パス設定を確認してください。", e);
         }
 
@@ -215,32 +219,57 @@ public class SeleniumTest {
         if (driver instanceof TakesScreenshot) {
             File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             try {
-                // スクリーンショットを保存するディレクトリを作成
                 File screenshotDir = new File("target/screenshots");
                 if (!screenshotDir.exists()) {
                     screenshotDir.mkdirs();
                 }
-                // 一意のファイル名を生成 (テスト名 + タイムスタンプ + UUID)
                 String fileName = testName + "_" + System.currentTimeMillis() + "_" + UUID.randomUUID().toString().substring(0, 8) + ".png";
                 File destFile = new File(screenshotDir, fileName);
                 FileUtils.copyFile(screenshot, destFile);
-                System.err.println("スクリーンショットを保存しました: " + destFile.getAbsolutePath());
+                System.out.println("スクリーンショットを保存しました: " + destFile.getAbsolutePath()); // System.err.printlnから変更
             } catch (IOException e) {
-                System.err.println("スクリーンショットの保存に失敗しました: " + e.getMessage());
+                System.out.println("スクリーンショットの保存に失敗しました: " + e.getMessage()); // System.err.printlnから変更
             }
         }
     }
 
-    // 各テストメソッド実行前にWebDriverを初期化するメソッド ★ここから修正
+    // 各テストメソッド実行前にWebDriverを初期化するメソッド ★修正
     @Before
     public void setup() {
-        driver = new ChromeDriver();
-        // 必要に応じて、ここで最大化やタイムアウトの設定も行えます
-        // driver.manage().window().maximize();
-        // driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        String browserName = System.getProperty("browser", "chrome").toLowerCase(); // デフォルトはChrome
+
+        switch (browserName) {
+            case "firefox":
+                // System.setProperty("webdriver.gecko.driver", "path/to/geckodriver"); // Selenium Managerが自動的にドライバーを解決できない場合に必要
+                driver = new FirefoxDriver();
+                // ★追加：Firefoxのデフォルト待機時間を設定
+                defaultWaitDuration = Duration.ofSeconds(25); // Chromeより少し長めに設定
+                System.out.println("Firefoxでテストを開始します。");
+                break;
+            // case "edge": // 将来Edgeを追加する際にコメント解除
+            //     // System.setProperty("webdriver.edge.driver", "path/to/msedgedriver.exe"); // Selenium Managerが自動的にドライバーを解決できない場合に必要
+            //     // driver = new EdgeDriver();
+            //     // ★追加：Edgeのデフォルト待機時間を設定
+            //     // defaultWaitDuration = Duration.ofSeconds(30); // 例として更に長めに設定
+            //     // System.out.println("Edgeでテストを開始します。");
+            //     // break;
+            case "chrome":
+            default:
+                // System.setProperty("webdriver.chrome.driver", "path/to/chromedriver"); // Selenium Managerが自動的にドライバーを解決できない場合に必要
+                driver = new ChromeDriver();
+                // ★追加：Chromeのデフォルト待機時間を設定
+                defaultWaitDuration = Duration.ofSeconds(20);
+                System.out.println("Chromeでテストを開始します。");
+                break;
+        }
+        // 共通のWebDriver設定
+        driver.manage().window().maximize();
+
+        // ★修正：WebDriverWaitのインスタンスを共通化し、動的な待機時間を使用
+        wait = new WebDriverWait(driver, defaultWaitDuration);
     }
 
-    // 各テストメソッド実行後にWebDriverを終了するメソッド ★ここから修正
+    // 各テストメソッド実行後にWebDriverを終了するメソッド
     @After
     public void teardown() {
         if (driver != null) {
@@ -250,9 +279,8 @@ public class SeleniumTest {
 
     @Test
     public void testFormInputAndRadioButtons() {
-        // WebDriver driver = new ChromeDriver(); // 削除 ★修正
         try {
-            driver.get(FILE_PATH); // driverがクラスフィールドになったため、宣言なしでアクセス可能
+            driver.get(FILE_PATH);
 
             // ページのタイトル、H1、Pタグの検証
             String pageTitle = driver.getTitle();
@@ -276,8 +304,7 @@ public class SeleniumTest {
 
             System.out.println("--- ラジオボタン選択テスト開始 ---");
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
+            // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // ★削除
             WebElement radioA = wait.until(ExpectedConditions.elementToBeClickable(By.id("radio-a")));
             radioA.click();
             System.out.println("「はい」ラジオボタンをクリックしました。");
@@ -285,23 +312,21 @@ public class SeleniumTest {
             assertTrue("「はい」ラジオボタンが選択されていません", radioA.isSelected());
             System.out.println("「はい」ラジオボタンが選択されていることを確認しました。");
 
-            Thread.sleep(1000);
+            // Thread.sleep(1000); // ★削除
 
-        } catch (Throwable t) { // 例外発生時もdriverは存在するため、スクリーンショット取得可能
+        } catch (Throwable t) {
             takeScreenshot(driver, "testFormInputAndRadioButtons");
             t.printStackTrace();
             org.junit.Assert.fail("テスト中にエラーが発生しました: " + t.getMessage());
         }
-        // finally ブロックを削除し、driver.quit() は @After に移動 ★修正
     }
 
     @Test
     public void testCheckboxes() {
-        // WebDriver driver = new ChromeDriver(); // 削除 ★修正
         try {
             driver.get(FILE_PATH);
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+            // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20)); // ★削除
 
             System.out.println("--- チェックボックス選択テスト開始 ---");
 
@@ -330,24 +355,22 @@ public class SeleniumTest {
             assertFalse("check-strategy のチェックが外れていません", strategyCheckbox.isSelected());
             System.out.println("「戦略と勢い」チェックボックスのチェックを外しました。");
 
-            Thread.sleep(1000);
+            // Thread.sleep(1000); // ★削除
 
         } catch (Throwable t) {
             takeScreenshot(driver, "testCheckboxes");
             t.printStackTrace();
             org.junit.Assert.fail("テスト中にエラーが発生しました: " + t.getMessage());
         }
-        // finally ブロックを削除し、driver.quit() は @After に移動 ★修正
     }
 
 
     @Test
     public void testFileUpload() {
-        // WebDriver driver = new ChromeDriver(); // 削除 ★修正
         try {
             driver.get(FILE_PATH);
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // ★削除
 
             System.out.println("--- ファイルアップロードテスト開始 ---");
 
@@ -355,7 +378,7 @@ public class SeleniumTest {
             File file = new File(UPLOAD_FILE_PATH);
 
             if (!file.exists()) {
-                System.err.println("エラー: 指定されたファイルが見つかりません: " + UPLOAD_FILE_PATH);
+                System.out.println("エラー: 指定されたファイルが見つかりません: " + UPLOAD_FILE_PATH); // System.err.printlnから変更
                 org.junit.Assert.fail("アップロードテスト用のファイルが見つかりません。パスを確認してください。");
             }
 
@@ -374,23 +397,21 @@ public class SeleniumTest {
                     uploadedFileName.contains(expectedFileName));
             System.out.println("ファイルが正しく選択されていることを確認しました。");
 
-            Thread.sleep(3000);
+            // Thread.sleep(3000); // ★削除
 
         } catch (Throwable t) {
             takeScreenshot(driver, "testFileUpload");
             t.printStackTrace();
             org.junit.Assert.fail("ファイルアップロードテスト中にエラーが発生しました: " + t.getMessage());
         }
-        // finally ブロックを削除し、driver.quit() は @After に移動 ★修正
     }
 
     @Test
     public void testDropdown() {
-        // WebDriver driver = new ChromeDriver(); // 削除 ★修正
         try {
             driver.get(FILE_PATH);
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+            // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20)); // ★削除
 
             System.out.println("--- プルダウン選択テスト開始 ---");
 
@@ -406,22 +427,20 @@ public class SeleniumTest {
             assertEquals("選択されたオプションのテキストが一致しません", "アッガイ", msDropdown.getFirstSelectedOption().getText().trim());
             System.out.println("「アッガイ」が選択されていることを確認しました。");
 
-            Thread.sleep(1000);
+            // Thread.sleep(1000); // ★削除
 
         } catch (Throwable t) {
             takeScreenshot(driver, "testDropdown");
             t.printStackTrace();
             org.junit.Assert.fail("テスト中にエラーが発生しました: " + t.getMessage());
         }
-        // finally ブロックを削除し、driver.quit() は @After に移動 ★修正
     }
 
 
     @Test
     public void testFormSubmissionAndConfirmation() {
-        // WebDriver driver = new ChromeDriver(); // 削除 ★修正
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // ★削除
 
             // CSVからデータを読み込む
             List<InterestOption> interestsOptions = readInterestsFromCsv();
@@ -453,9 +472,7 @@ public class SeleniumTest {
             List<String> expectedSelectedInterestsValues = new ArrayList<>();
 
             for (InterestOption option : interestsOptions) {
-                // "politics" を選択する場合
                 if ("politics".equals(option.getValue())) {
-                    // input.htmlでIDが "check-" + option.value となるように生成されているため、それに合わせる
                     WebElement checkbox = driver.findElement(By.id("check-" + option.getValue()));
                     checkbox.click();
                     expectedSelectedInterestsLabels.add(option.getLabel());
@@ -506,9 +523,9 @@ public class SeleniumTest {
             assertTrue("名前が確認ページに表示されていません", actualText.contains("名前: " + testName));
             System.out.println("名前 '" + testName + "' の表示を確認。");
 
-            // テスト失敗時のスクリーンショット取得確認のため、名前が正しくない検証を残す
-//             assertTrue("名前が確認ページに表示されていません", actualText.contains("名前： " + testName)); // 「：」を全角に変更
-//             System.out.println("名前 '" + testName + "' の表示を確認。");
+            //テスト失敗時のスクリーンショット取得確認のため、名前が正しくない検証を残す
+            // assertTrue("名前が確認ページに表示されていません", actualText.contains("名前： " + testName)); // 「：」を全角に変更
+            // System.out.println("名前 '" + testName + "' の表示を確認。");
 
 
             // 性別が正しいか検証
@@ -535,13 +552,12 @@ public class SeleniumTest {
             assertTrue("好きなモビルスーツが確認ページに表示されていません", actualText.contains("好きなモビルスーツ: " + selectedMsLabel));
             System.out.println("好きなモビルスーツ '" + selectedMsLabel + "' の表示を確認。");
 
-            Thread.sleep(6000);
+            // Thread.sleep(6000); // ★削除
 
-        } catch (Throwable t) { // Exception e から Throwable t に変更
+        } catch (Throwable t) {
             takeScreenshot(driver, "testFormSubmissionAndConfirmation");
             t.printStackTrace();
             org.junit.Assert.fail("フォーム送信と確認ページテスト中にエラーが発生しました: " + t.getMessage());
         }
-        // finally ブロックを削除し、driver.quit() は @After に移動 ★修正
     }
 }
