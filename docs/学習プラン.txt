@@ -4,6 +4,11 @@
 4.テストブラウザの追加（Firefoxでのテスト実行）（完了）
 5.静的解析ツールの導入（LinterやSonarQubeなど）（完了）
 6.Edgeブラウザのコードの整理を伴う追加対応再挑戦（新運用マニュアル効果の確認を含む）（対応中）
+    - STEP 1: config.properties & 環境設定クラス（済）
+     - 追加: テスト実行管理の階層化
+    - STEP 2: SeleniumTest.java 修正（中断）
+    - STEP 3: BrowserFactory.java の生成
+    - STEP 4: Checkstyle/SpotBugs検証
 7.テストデータ・環境設定の一元管理とコードからの参照化の検討
 8. CI/CD（継続的インテグレーション/継続的デリバリー）との連携
     - CIパイプラインの構築
