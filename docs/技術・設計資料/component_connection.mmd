@@ -1,0 +1,34 @@
+graph TD
+    ME[ME（マネージャー）]
+    SC_D[SC-D（設計担当AI）]
+    SC_I[SC-I（実装担当AI）]
+    RV_G[RV-G（汎用レビュアーAI）]
+    RV_C[RV-C（コードレビュー特化AI）]
+
+    subgraph テスト実行管理構造
+        TR[TestRunner.java]
+        STM[SeleniumTestManager.java]
+        ST[SeleniumTest.java]
+    end
+
+    ME -.管理・指示.-> SC_D
+    ME -.管理・指示.-> SC_I
+    ME -.レビュー依頼.-> RV_G
+    ME -.レビュー依頼.-> RV_C
+
+    SC_D -->|設計作成| TR
+    SC_D -->|設計作成| STM
+
+    SC_I -->|実装| TR
+    SC_I -->|実装| STM
+
+    RV_G -->|レビュー| TR
+    RV_G -->|レビュー| STM
+
+    RV_C -->|レビュー| TR
+    RV_C -->|レビュー| STM
+
+    ST -->|後続STEP| SC_D
+    ST -->|後続STEP| SC_I
+    ST -->|後続STEP| RV_G
+    ST -->|後続STEP| RV_C

@@ -1,0 +1,37 @@
+graph TD
+    A[TestRunner.java<br/>（エントリポイント）]
+    B[SeleniumTestManager.java<br/>（テスト管理・実行制御）]
+    C[SeleniumTest.java<br/>（テストケースの基本骨格）]
+    D[各テストケースクラス<br/>（例：LoginTest.java、SearchTest.java）]
+
+    A -->|呼び出し| B
+    B -->|生成/管理| C
+    C -->|継承| D
+
+    subgraph レイヤー構造
+        direction TB
+        A
+        B
+        C
+        D
+    end
+
+    subgraph 補足情報
+        note1["TestRunner.java：  
+        - 全テストの開始点  
+        - 実行パラメータの受取  
+        - SeleniumTestManager呼び出し"]
+
+        note2["SeleniumTestManager.java：  
+        - テストケースの一覧管理  
+        - 実行順序制御  
+        - 結果の集計と出力"]
+
+        note3["SeleniumTest.java：  
+        - 各テストケース共通の処理（セットアップ、終了処理）  
+        - ログ出力、例外処理"]
+
+        note4["各テストケースクラス：  
+        - 実際のテストシナリオ記述  
+        - SeleniumTestを継承して利用"]
+    end

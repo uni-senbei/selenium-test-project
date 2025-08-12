@@ -1,0 +1,33 @@
+flowchart TB
+    %% テスト実行層
+    subgraph Execution[テスト実行層]
+        TR[TestRunner]
+        STM[SeleniumTestManager]
+        STC[SeleniumTestクラス群]
+    end
+
+    %% テスト制御層
+    subgraph Control[テスト制御層]
+        CFG[ConfigLoader\n(設定管理)]
+        LOG[Logger\n(ログ管理)]
+        REP[ReportGenerator\n(レポート生成)]
+        RES[TestResultAggregator\n(結果集約)]
+    end
+
+    %% テスト資源層
+    subgraph Resources[テスト資源層]
+        TD[TestData\n(テストデータ)]
+        AUT[Application Under Test\n(テスト対象)]
+        SEL[Selenium Grid / ブラウザドライバ]
+    end
+
+    %% 関係線
+    TR --> STM --> STC
+    TR --> CFG
+    TR --> LOG
+    TR --> REP
+    TR --> RES
+
+    STC --> TD
+    STC --> AUT
+    STC --> SEL
