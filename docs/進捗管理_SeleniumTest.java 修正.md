@@ -14,12 +14,19 @@
 ## [STEP2 詳細設計ドラフト（SeleniumTest.java修正・先取り版）](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3205835431)
 - SC-Dによる詳細設計ドラフト案の作成
 
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3208601821)
+- CMによるレビュー結果
+
+## [SC-Iのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3208631754)
+- SC-Iによるレビュー結果
+- 詳細設計ドラフト案をバッククォート3つで囲んでチャット欄に貼り付けたが3度やって3度とも囲んだ中身だけ見れなかったようなので、バッククォートで囲まずにドラフト案のみ貼り付けた所ようやく内容を確認できた
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3208643741)
+- RV-Gによるレビュー結果
+
+## [RV-Cレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3208661380)
+- RV-Cによるレビュー結果
+- このタイミングで2種類の回答が出たため念のため両方残した
+
 ## 次の作業
-- 詳細設計ドラフト案のレビューを開始予定
-
-## []()
-- 
-
-## []()
-- 
-
+- 詳細設計ドラフト案のレビューを受けて、どこまで対応するか協議予定
