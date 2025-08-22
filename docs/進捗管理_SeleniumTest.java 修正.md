@@ -28,5 +28,11 @@
 - RV-Cによるレビュー結果
 - このタイミングで2種類の回答が出たため念のため両方残した
 
+## [SC-Dの対応方針](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3212650411)
+- SC-Iの改善案と、RV-Cのレビュー結果にSC-Iの意見を統合した改善案に対するSC-Dの対応方針
+
+## [CMとの協議結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3212707433)
+- SC-Dの対応方針を基にCMと協議し、対応するもの、今回は見送るものを確定
+
 ## 次の作業
-- 詳細設計ドラフト案のレビューを受けて、どこまで対応するか協議予定
+- 詳細設計の確定版を作成予定
