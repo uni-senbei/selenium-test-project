@@ -34,5 +34,18 @@
 ## [CMとの協議結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3212707433)
 - SC-Dの対応方針を基にCMと協議し、対応するもの、今回は見送るものを確定
 
+## [SC-Iの見解を確認](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3213757489)
+- 概ね許容だが2つの留意点あり
+
+## [SC-Dへの最終指示書](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3213792726)
+- SC-Iの見解を踏まえた調整後の最終指示書を作成
+
+## [仮の詳細設計の確定版を作成](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3214088732)
+- 最終指示書をSC-Dに共有し、確定版の作成を依頼
+- SC-Dがドラフト案を踏襲できていない確定版を2度出力したため臨時でドキュメント生成専門のAIを用意
+- ドキュメント生成専門のAIにはドラフト案と最終指示書以外の情報は共有していないため本AIチーム特有の前提が守られているかのレビューが必須
+- SC-Dには上記視点でのレビュー実施を依頼
+※無料版ChatGPTの制限がかかったため中断
+
 ## 次の作業
-- 詳細設計の確定版を作成予定
+- SC-Dによる仮の詳細設計の確定版をレビュー予定
