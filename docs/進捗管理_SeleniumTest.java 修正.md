@@ -47,5 +47,18 @@
 - SC-Dには上記視点でのレビュー実施を依頼
 ※無料版ChatGPTの制限がかかったため中断
 
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3217557291)
+- CMによるレビュー結果は指摘点なし
+
+## [SC-Iのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3217561435)
+- SC-Iのレビュー結果は複数の指摘点あり
+- 特に4点は修正必須として報告
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3217562375)
+- RV-Gのレビュー結果は指摘点なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3217563139)
+- RV-Cのレビュー結果は指摘点はあるもののこのままでも問題なし
+
 ## 次の作業
-- SC-Dによる仮の詳細設計の確定版をレビュー予定
+- 修正必須の報告を始めとした各指摘点の反映方針を協議予定
