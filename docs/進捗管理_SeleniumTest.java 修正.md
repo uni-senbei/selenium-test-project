@@ -60,5 +60,13 @@
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3217563139)
 - RV-Cのレビュー結果は指摘点はあるもののこのままでも問題なし
 
+## [SC-Dへの最終指示書](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3219714529)
+- CM、SC-Iとの協議の結果、修正必須4件は今回対応、その他は次のステップで対応する事で方針を決定
+- SC-Dへの修正指示を作成しSC-Dに修正の反映を依頼
+- SC-Dは今回も元の詳細設計の確定版の文脈を保てなかったため、ドキュメント生成専門のAIに修正の反映を依頼
+
+## [詳細設計の確定版](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3219860042)
+- 臨時のドキュメント生成専門AIにより4件の修正を反映
+
 ## 次の作業
-- 修正必須の報告を始めとした各指摘点の反映方針を協議予定
+- 修正必須を反映した詳細設計の確定版をレビュー予定

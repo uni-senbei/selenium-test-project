@@ -6,8 +6,9 @@
 6.Edgeブラウザのコードの整理を伴う追加対応再挑戦（新運用マニュアル効果の確認を含む）（対応中）
     - STEP 1: config.properties & 環境設定クラス（済）
      - 追加: テスト実行管理の階層化（済）
-    - STEP 2: SeleniumTest.java 修正
+    - STEP 2: SeleniumTest.java 修正（対応中）
     - STEP 3: BrowserFactory.java の生成
+      - [SC-Iのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3217561435)の修正推奨・任意を対応
     - STEP 4: Checkstyle/SpotBugs検証
 7.テストデータ・環境設定の一元管理とコードからの参照化の検討
 8. CI/CD（継続的インテグレーション/継続的デリバリー）との連携
