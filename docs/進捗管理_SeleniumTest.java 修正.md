@@ -67,6 +67,20 @@
 
 ## [詳細設計の確定版](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3219860042)
 - 臨時のドキュメント生成専門AIにより4件の修正を反映
+- SC-Dによる差分とチーム特有の前提チェックを実施
+- 問題ないとの事なので各レビュアーへレビュー依頼
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3222152296)
+- CMによるレビュー結果は問題なし
+
+## [SC-Iのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3222156363)
+- SC-Iによるレビュー結果は問題なし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3222170461)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3222184811)
+- RV-Cによるレビュー結果は問題なし
 
 ## 次の作業
-- 修正必須を反映した詳細設計の確定版をレビュー予定
+- 詳細設計の確定版を基にコード修正を開始予定
