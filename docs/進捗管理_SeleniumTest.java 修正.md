@@ -82,5 +82,25 @@
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3222184811)
 - RV-Cによるレビュー結果は問題なし
 
+## 詳細設計フェーズは完了したため、実装フェーズを開始
+- SeleniumTest.javaは肥大化していて一気に修正すると破綻する可能性があるため、以下の観点で段階的に修正する事を検討
+  - 修正対象のSeleniumTest.javaに対し、具体的にどの要素をどのように修正するかリストアップ
+  - 上記リストを基に修正の順序を策定
+  - 必要に応じて疑似コードも作成
+
+## [SeleniumTest.java 修正対象リスト（詳細版）](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3227399022)
+- SC-Iが作成した **SeleniumTest.java（現状）** と **STEP2 詳細設計確定版** の照合結果
+- なおSC-Iが最初に提示したものはCMの方で詳細度が足りないとの理由で却下
+
+## [SC-Iからの「修正対象リスト」を基に、暫定的な優先度付けと安全かつ効率的な修正ロードマップの提案](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3227481332)
+- SC-Iから、リストに順位を付けるだけではなく、依存関係・テスト容易性・安全性・重要度を加味した実装順序を提案
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3227498305)
+- CMによるレビュー結果は問題なし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3227540829)
+- RV-Gには簡単に経緯を説明した上でレビューを依頼し、結果は問題なし
+
 ## 次の作業
-- 詳細設計の確定版を基にコード修正を開始予定
+- SC-Iがロードマップ作成したところで無料版ChatGPTの制限がかかったため、Geminiのレビューのみ実施
+- 制限解除後にChatGPTによるレビューを実施予定
