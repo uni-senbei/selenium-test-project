@@ -101,6 +101,11 @@
 ## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3227540829)
 - RV-Gには簡単に経緯を説明した上でレビューを依頼し、結果は問題なし
 
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3230517301)
+- SC-Dによるレビューは概ね問題ないがいくつかの補足あり
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3230531018)
+- RV-Cによるレビュー結果は問題ないがいくつかの改善ポイントあり
+
 ## 次の作業
-- SC-Iがロードマップ作成したところで無料版ChatGPTの制限がかかったため、Geminiのレビューのみ実施
-- 制限解除後にChatGPTによるレビューを実施予定
+- いくつかの改善案を反映するか協議予定
