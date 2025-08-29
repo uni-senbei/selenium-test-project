@@ -107,5 +107,10 @@
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3230531018)
 - RV-Cによるレビュー結果は問題ないがいくつかの改善ポイントあり
 
-## 次の作業
-- いくつかの改善案を反映するか協議予定
+## [SC-Iの対応方針](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3236539035)
+- 各レビュアーのレビュー結果を受けてCMと協議し、SC-Dからあがった3点を修正候補としてピックアップ
+- 修正候補3点をSC-Iに共有し、対応方針の提出を依頼
+
+## [SC-IによるTestResult仕様案](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3236659105)
+- SC-Iの対応方針を受けて、CM、SC-Dと協議の結果、TestResultの仕様確定を優先させることで合意
+- SC-IにTestResult仕様の確定案作成を依頼
