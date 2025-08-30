@@ -114,3 +114,21 @@
 ## [SC-IによるTestResult仕様案](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3236659105)
 - SC-Iの対応方針を受けて、CM、SC-Dと協議の結果、TestResultの仕様確定を優先させることで合意
 - SC-IにTestResult仕様の確定案作成を依頼
+
+## [SC-Iによる修正ロードマップの改訂](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3239175309)
+- SC-Iによる修正ロードマップの改訂
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3239198757)
+- CMによるレビュー結果は問題なし
+
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3239199754)
+- SC-Dによるレビュー結果は改善提案あり
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3239200610)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3239201255)
+- RV-Cによるレビュー結果は若干の確認ポイントはあるものの問題なし
+
+## 次の作業
+- 修正ロードマップの改訂版に沿ってSeleniumTest.javaの修正に着手予定
