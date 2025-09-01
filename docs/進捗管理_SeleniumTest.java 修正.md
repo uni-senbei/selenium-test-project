@@ -130,5 +130,11 @@
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3239201255)
 - RV-Cによるレビュー結果は若干の確認ポイントはあるものの問題なし
 
+## [SC-Iの下準備具体化](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3240583253)
+- SC-Iによる「修正ロードマップのSTEP0下準備」でやる事の具体化
+- v2となっているのは、初稿はSeleniumTest.javaの内容を踏襲できていなかったため
+- また、SC-IからはSeleniumTest.javaをどう修正するかの提案が主だったが、既存のSeleniumTest.javaはリネームして新規でSeleniumTest.javaを作成し直すことを提案
+
 ## 次の作業
-- 修正ロードマップの改訂版に沿ってSeleniumTest.javaの修正に着手予定
+- 具体化したSTEP0下準備のレビューを予定
+
