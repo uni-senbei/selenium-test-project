@@ -135,6 +135,17 @@
 - v2となっているのは、初稿はSeleniumTest.javaの内容を踏襲できていなかったため
 - また、SC-IからはSeleniumTest.javaをどう修正するかの提案が主だったが、既存のSeleniumTest.javaはリネームして新規でSeleniumTest.javaを作成し直すことを提案
 
-## 次の作業
-- 具体化したSTEP0下準備のレビューを予定
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3244544128)
+- CMによるレビュー結果は問題なし
 
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3244577047)
+- SC-Dによるレビュー結果ではいくつかの指摘点があるが、「TestResult仕様の未確定項目」について確認したところ、「未確定」と触れたのは誤りと報告
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3244590700)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3244595123)
+- RV-Cによるレビュー結果はいくつかの改善提案はあるが問題はなし
+
+## 次の作業
+- STEP0下準備を実施予定
