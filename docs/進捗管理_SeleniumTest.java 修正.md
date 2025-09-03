@@ -147,5 +147,14 @@
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3244595123)
 - RV-Cによるレビュー結果はいくつかの改善提案はあるが問題はなし
 
+## STEP 0: 下準備の開始
+* 0-1. SeleniumTest.java のベースライン確認を開始
+- テスト成功時のスクリーンショットについてはSC-Iとの協議の結果今回は見送り
+- SeleniumTest.java を SeleniumTest_legacy.java にリネーム
+- SeleniumTest_legacy.java のテスト実行はSeleniumTestManager.java との連携が解除されなかったため失敗
+- SeleniumTest_legacy.java をプロジェクト管理外のフォルダへ移動し、SeleniumTest.java を作成
+* 0-2. 簡易テストケースの準備を開始
+- SC-IによるSeleniumTest.java のコード生成
+
 ## 次の作業
-- STEP0下準備を実施予定
+- SeleniumTest.javaのコードレビューを実施予定
