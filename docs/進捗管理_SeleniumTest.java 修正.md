@@ -156,5 +156,28 @@
 * 0-2. 簡易テストケースの準備を開始
 - SC-IによるSeleniumTest.java のコード生成
 
+## [SC-I作成のSeleniumTest.javaに書く最小限の正常系テスト](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3251192292)
+- SC-Iによるコード生成
+- 実際にSeleniumTest.javaに貼り付けてみると多数のエラーが出ているが、まずはそのことは伝えず各レビュアーAIのレビューを依頼
+* エラーについて
+- jupiterがエラーが出ている
+  - jupiterを調べた所JUnit5で使うものと出ていたが、今まではJUnit4で進行していた認識なのでその影響と思われる
+  - @testなどの全アノテーションが赤文字になっているが、これはJupiterを使っているからと推測
+  - その他getDriverやopen、close、assertEquals、assertTrueも赤文字になっているが、これも同じ原因ではないかと推測
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3251295156)
+- CMによるレビュー結果は問題なし
+
+## [SC-D視点でのレビュー](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3251313428)
+- SC-Dによるレビュー結果はいくつかの改善案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3251323781)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3251332247)
+- RV-Cによるレビュー結果はいくつかの改善案はあるものの問題はなし
+
 ## 次の作業
-- SeleniumTest.javaのコードレビューを実施予定
+- SeleniumTest.javaのコードレビュー結果の確定案を協議予定
+- 現在出ているエラーについてはレビュアーAIからは指摘はなかったため、エラー内容を共有した上で解消方法を協議予定
+
