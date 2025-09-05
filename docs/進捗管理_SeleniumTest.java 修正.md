@@ -177,7 +177,22 @@
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3251332247)
 - RV-Cによるレビュー結果はいくつかの改善案はあるものの問題はなし
 
-## 次の作業
-- SeleniumTest.javaのコードレビュー結果の確定案を協議予定
-- 現在出ているエラーについてはレビュアーAIからは指摘はなかったため、エラー内容を共有した上で解消方法を協議予定
+## [SC-IによるJUnit4 対応](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3257829103)
+- CMにエラー内容を共有し原因を調査
+- エラーの原因は2点あり、JUnit5を使っている事の他にSeleniumTestManagerで未対応のメソッドがある事
+- JUnitについては4で進めていたので、今回はコードをJUnit4に合わせて修正
 
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3257839933)
+- CMによるレビュー結果は問題なし
+
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3257868491)
+- SC-Dによるレビュー結果はいくつかの改善案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3257875134)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3257881334)
+- RV-Cによるレビュー結果はいくつかの改善案はあるものの問題なし
+
+## 次の作業
+- 修正ロードマップのSTEP1を開始予定
