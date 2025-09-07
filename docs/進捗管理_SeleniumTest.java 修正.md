@@ -194,5 +194,21 @@
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3257881334)
 - RV-Cによるレビュー結果はいくつかの改善案はあるものの問題なし
 
+## [SC-IによるSTEP1の具体化](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3263317743)
+- ChatGPTのどちらの回答が好みかの選択肢が出たため回答は2つ
+- 各AIにどちらの回答がいいか確認したところ、回答2を推奨していたので、回答2をベースにレビューを依頼
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3263336307)
+- CMによるレビュー結果は問題なし
+
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3263337816)
+- SC-Dによるレビュー結果は改善案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3263338462)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3263340990)
+- RV-Cによるレビュー結果は改善案はあるものの問題なし
+
 ## 次の作業
-- 修正ロードマップのSTEP1を開始予定
+- 回答2をベースにSTEP1を開始予定
