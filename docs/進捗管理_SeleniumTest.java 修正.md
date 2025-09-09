@@ -210,5 +210,25 @@
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3263340990)
 - RV-Cによるレビュー結果は改善案はあるものの問題なし
 
+## [STEP1-1: configure/setUp の統一（実装具体化）](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3268492346)
+- SC-Iによるconfigure/setUp の統一案
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3268495092)
+- CMによるレビュー結果は問題なし
+
+## [SC-D 視点（設計寄り）のレビュー](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3268499743)
+- SC-Dによるレビュー結果は改善案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3268505553)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3268510226)
+- RV-Cによるレビュー結果は改善案はあるものの問題はなし
+
+## [CMからの修正依頼](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3268539419)
+- 各レビュアーのレビュー結果を受けてCMと協議した結果、以下2点は反映する事で合意
+  - SeleniumTestManagerから@Beforeアノテーションを外す
+  - 未実装メソッドの追加
+
 ## 次の作業
-- 回答2をベースにSTEP1を開始予定
+- レビュー結果を反映予定
