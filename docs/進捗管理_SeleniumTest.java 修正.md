@@ -230,5 +230,20 @@
   - SeleniumTestManagerから@Beforeアノテーションを外す
   - 未実装メソッドの追加
 
+## [SC-Iによる修正版の作成](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3272870913)
+- SC-Iにより2点の修正版を作成
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3272874600)
+- CMによるレビュー結果は問題なし
+
+## [SC-D視点でのレビュー](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3272876554)
+- SC-Dによるレビュー結果は改善提案はあるが、問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3272878091)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3272879640)
+- RV-Cによるレビュー結果は改善提案はあるが、問題はなし
+
 ## 次の作業
-- レビュー結果を反映予定
+- SeleniumTestManager.javaのコードを生成予定
