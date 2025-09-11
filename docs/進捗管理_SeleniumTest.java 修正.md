@@ -245,5 +245,26 @@
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3272879640)
 - RV-Cによるレビュー結果は改善提案はあるが、問題はなし
 
+## [SC-Iによるコード生成](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3274349037)
+- 各レビュアーからは次の1-2へ進むようコメントがあったが、SC-IとしてはSeleniumTestManager.javaの仕様確定を優先したいとの事だったので、コード生成を依頼
+- IllegalStateExceptionについては、再度組み込むよう依頼
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3276972423)
+- CMによるレビュー結果は問題なし
+
+## [SC-D視点でのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3276976344)
+- SC-Dによるレビュー結果は改善案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3276977945)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3276980607)
+- RV-Cによるレビュー結果は改善案はあるものの問題はなし
+
+## [SeleniumTestManager.javaに修正を適用](https://github.com/uni-senbei/selenium-test-project/blob/master/src/test/java/com/example/test/SeleniumTestManager.java)
+- SeleniumTestManager.javaに修正したコードを適用
+- 現状ではTestConfig クラスが未実装のため、TestConfig、createDriver、getBaseUrlの3つは未解決のまま
+- 想定外のエラーなどは出ていないため、STEP1-1はこれで完了
+
 ## 次の作業
-- SeleniumTestManager.javaのコードを生成予定
+- STEP1-2: open/close の実装 + スクリーンショット保存先パスの統一を開始予定
