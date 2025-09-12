@@ -266,5 +266,20 @@
 - 現状ではTestConfig クラスが未実装のため、TestConfig、createDriver、getBaseUrlの3つは未解決のまま
 - 想定外のエラーなどは出ていないため、STEP1-1はこれで完了
 
+## [STEP1-2 のレビュアー確認用ドキュメント（具体化案） まとめ](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3283069139)
+- SC-IにSTEP1-2 のドキュメント（具体化案） まとめを依頼
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3283072406)
+- CMによるレビュー結果は問題なし
+
+## [SC-D 視点でのレビュー](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3283089555)
+- SC-Dによるレビュー結果は改善案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3283093636)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3283098069)
+- RV-Cによるレビュー結果は改善案はあるものの問題はなし
+
 ## 次の作業
-- STEP1-2: open/close の実装 + スクリーンショット保存先パスの統一を開始予定
+- SC-Iにフィードバックを共有し、対応するか協議予定
