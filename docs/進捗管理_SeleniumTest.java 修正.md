@@ -281,5 +281,24 @@
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3283098069)
 - RV-Cによるレビュー結果は改善案はあるものの問題はなし
 
+## [レビュー結果と改善提案をすべて反映した **STEP1-2: 確定版ドキュメント** を作成](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3284962684)
+- ドキュメント確定版に以下の反映を依頼
+   * `close()` は `driver.quit()` + `driver=null`
+   * `open()` は相対/絶対URL両対応、結合処理は整形（ユーティリティ化 or 末尾スラッシュルール）
+   * `TestConfig` コンストラクタでディレクトリ存在チェック追加
+   * コメントで「quit を選んだ理由」「将来の拡張点」明記
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3287347214)
+- CMによるレビュー結果は問題なし
+
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3287349616)
+- SC-Dによるレビュー結果は改善案はあるものの問題なし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3287350815)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3287353469)
+- RV-Cによるレビュー結果は改善案はあるものの問題なし
+
 ## 次の作業
-- SC-Iにフィードバックを共有し、対応するか協議予定
+- SC-Iにコード生成を依頼予定
