@@ -300,5 +300,20 @@
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3287353469)
 - RV-Cによるレビュー結果は改善案はあるものの問題なし
 
+## [TestConfig.java の設計図レベル擬似コード作成](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3291158494)
+- SC-Iによる疑似コード作成
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3291176109)
+- CMによるレビュー結果は問題なし
+
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3291204352)
+- SC-Dによるレビュー結果は改善案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3291216616)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3291244975)
+- RV-Cによるレビュー結果は改善案はあるものの問題はなし
+
 ## 次の作業
-- SC-Iにコード生成を依頼予定
+- SC-Iに改善提案を共有し、反映するかどうかを協議予定
