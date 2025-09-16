@@ -315,5 +315,27 @@
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3291244975)
 - RV-Cによるレビュー結果は改善案はあるものの問題はなし
 
+## [レビューで挙がった改善案を反映した設計図](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3295228472)
+- SC-Iにレビューで挙がった改善案の反映を依頼
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3295250092)
+- CMによるレビュー結果は問題なし
+
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3295305563)
+- SC-Dによるレビュー結果は改善案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3295319365)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3295336108)
+- RV-Cによるレビュー結果は改善案はあるものの問題はなし
+
+## [完成版の擬似コード](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3297063631)
+- 改善提案を受けて以下を反映
+  - normalizeUrl() の正規表現を安全化
+  - 設定ファイル読み込み時の null チェック追加
+  - 例外時に最低限のメッセージを出力
+  - デフォルト値（base.url / screenshot.dir）を用意し、config がなくても動作可能
+
 ## 次の作業
-- SC-Iに改善提案を共有し、反映するかどうかを協議予定
+- SC-Iに擬似コードをベースに TestConfig.java の実装コード生成を依頼予定
