@@ -337,5 +337,20 @@
   - 例外時に最低限のメッセージを出力
   - デフォルト値（base.url / screenshot.dir）を用意し、config がなくても動作可能
 
+## [擬似コードをベースに、TestConfig.java の実装コードを生成](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3300891615)
+- 以下のレビューで多数の改善提案がでたものの、現状のコード自体には問題がないとの事なので一旦実装し、現在残っているコンパイルエラーが解消されたことを確認
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3302134612)
+- CMによるレビュー結果は改善案はあるものの問題はなし
+
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3302139375)
+- SC-Dによるレビュー結果は改善案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3302146080)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3302154132)
+- RV-Cによるレビュー結果は改善案はあるものの問題はなし
+
 ## 次の作業
-- SC-Iに擬似コードをベースに TestConfig.java の実装コード生成を依頼予定
+- SC-Iにレビュー結果を共有し、対応方針を協議予定
