@@ -352,5 +352,32 @@
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3302154132)
 - RV-Cによるレビュー結果は改善案はあるものの問題はなし
 
+## [レビュー結果の整理](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3305148385)
+- SC-Iにレビュー結果を共有し、対応する/しない/相談したいに分類を依頼
+
+## [CMを交えた協議結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3305157589)
+- SC-Iの修正方針をCMと協議し、その結果をSC-Iに共有、実装方針を確定
+
+## [修正版Test Config](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3306397356)
+- 協議結果をTestConfig.javaに反映
+- なおこの際、SC-Iからレビュー観点に以下の観点を加えるよう依頼
+* `normalizeUrl()` が意図通り動作するか（特に末尾スラッシュの有無）
+* `screenshotDir` のパス変換とディレクトリ作成のタイミングが妥当か
+* `baseUrl` 空チェックでの例外メッセージが分かりやすいか
+* 既存コード（SeleniumTestManagerなど）に影響が出ないか
+
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3306483989)
+- CMによるレビュー結果は問題なし
+
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3306501028)
+- SC-Dによるレビュー結果は改善案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3306508364)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3306512636)
+- RV-Cによるレビュー結果は改善案はあるものの問題はなし
+
 ## 次の作業
 - SC-Iにレビュー結果を共有し、対応方針を協議予定
