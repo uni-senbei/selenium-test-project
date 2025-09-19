@@ -379,5 +379,23 @@
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3306512636)
 - RV-Cによるレビュー結果は改善案はあるものの問題はなし
 
+## [方針を反映した対応内容](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3310990401)
+- レビュー結果を協議して反映方針を決定
+
+## [整理した方針に沿って **TestConfig.java 修正版** を作成](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3311000846)
+- 修正方針を反映したTestConfig.javaの修正版を作成
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3311150623)
+- CMによるレビュー結果は問題なし
+
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3311155240)
+- SC-Dによるレビュー結果は改善提案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3311159539)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3311163457)
+- RV-Cによるレビュー結果は改善提案はあるものの問題はなし
+
 ## 次の作業
 - SC-Iにレビュー結果を共有し、対応方針を協議予定
