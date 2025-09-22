@@ -397,5 +397,9 @@
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3311163457)
 - RV-Cによるレビュー結果は改善提案はあるものの問題はなし
 
+## [TestConfig.javaに修正を反映](https://github.com/uni-senbei/selenium-test-project/blob/master/src/test/java/com/example/test/TestConfig.java)
+- 協議の結果、今回の改善提案は今必須の対応ではないと判断し、そのまま実装
+- 「Run → Edit Configurations」を開いて、- 「Environment variables」欄に「CI=true」を追加してテストを実行しコンソール出力が期待通りになっていることを確認
+
 ## 次の作業
-- SC-Iにレビュー結果を共有し、対応方針を協議予定
+- STEP2：SeleniumTest.java 修正を開始予定
