@@ -401,5 +401,21 @@
 - 協議の結果、今回の改善提案は今必須の対応ではないと判断し、そのまま実装
 - 「Run → Edit Configurations」を開いて、- 「Environment variables」欄に「CI=true」を追加してテストを実行しコンソール出力が期待通りになっていることを確認
 
+## [STEP2 での課題と疑似コード](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3323098889)
+- SC-Iから依頼された現状の `SeleniumTest.java` を共有
+- 上記を基に STEP2 での課題を整理し、改善方針を疑似コードで出力
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3323124592)
+- CMによるレビュー結果は問題なし
+
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3323135540)
+- SC-Dによるレビュー結果は改善提案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3323139177)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3323164800)
+- RV-Cによるレビュー結果は改善提案はあるものの問題はなし
+
 ## 次の作業
-- STEP2：SeleniumTest.java 修正を開始予定
+- 改善提案をSC-Iに共有し、対応方針を協議予定
