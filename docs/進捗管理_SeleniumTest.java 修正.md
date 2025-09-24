@@ -417,5 +417,13 @@
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3323164800)
 - RV-Cによるレビュー結果は改善提案はあるものの問題はなし
 
+## [SC-Iの対応方針](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3327361622)
+- SC-Iにレビュー結果を共有し、以下2点の対応を検討
+  - manager.openBaseUrl() の追加
+  - tearDown() の例外安全化
+
+## [CMの対応方針](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3327380615)
+- 念のためCMにも対応方針を確認したところ、結果はSC-Iと同じ
+
 ## 次の作業
-- 改善提案をSC-Iに共有し、対応方針を協議予定
+- 改善提案を疑似コードに反映予定
