@@ -425,5 +425,20 @@
 ## [CMの対応方針](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3327380615)
 - 念のためCMにも対応方針を確認したところ、結果はSC-Iと同じ
 
+## [疑似コードを修正](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3331165886)
+- openBaseUrl() の追加と tearDown() の例外安全化を取り入れた更新版の疑似コードを作成
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3331317419)
+- CMによるレビュー結果は問題なし
+
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3331318684)
+- SC-Dによるレビュー結果は改善提案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3331319814)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3331321913)
+- RV-Cによるレビュー結果は改善提案はあるものの問題はなし
+
 ## 次の作業
-- 改善提案を疑似コードに反映予定
+- SC-Iに改善提案を共有し、対応方針を協議予定
