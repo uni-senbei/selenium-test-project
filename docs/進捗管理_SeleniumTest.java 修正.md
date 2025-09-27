@@ -455,5 +455,20 @@
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3337442299)
 - RV-Cによるレビュー結果は改善提案はあるものの問題はなし
 
+## [改善提案点を反映したSeleniumTest.javaを作成](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3341337720)
+- TestConfig の生成＋manager.configure(config) 呼び出しを追加した修正版 SeleniumTest.java を作成
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3341367958)
+- CMによるレビュー結果は改善提案はあるものの問題はなし
+
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3341370647)
+- SC-Dによるレビュー結果は改善提案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3341380962)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3341391083)
+- RV-Cによるレビュー結果は改善提案はあるものの問題はなし
+
 ## 次の作業
 - SC-Iに改善提案を共有し、対応方針を協議予定
