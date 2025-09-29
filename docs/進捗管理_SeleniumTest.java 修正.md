@@ -470,5 +470,26 @@
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3341391083)
 - RV-Cによるレビュー結果は改善提案はあるものの問題はなし
 
+## [SeleniumTest.javaの実装コードを作成](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3345844044)
+- 今回は改善提案は反映せずに、実装コード作成する事に決定
+- なおSC-Iからは、前回のコードは実装コードとしてそのまま使えるレベルで作ってあるとの事だったが、念のため最終版（実装コード） の生成を依頼
+- コード作成時のコメントが「SeleniumTestManager」の詳細な確認を促す内容になっているが、これは「SeleniumTestManager」の内容を忘れているという事ではなく、SC-Iが知らない更新が入っていないかを確認する意図との事
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3345887689)
+- CMによるレビュー結果は問題なし
+
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3345920819)
+- SC-Dによるレビュー結果は改善提案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3345925937)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3345933963)
+- RV-Cによるレビュー結果は改善提案はあるものの問題はなし
+
+## [SeleniumTest.javaにコードを反映](src/test/java/com/example/SeleniumTest.java)
+- 作成した実装コードをSeleniumTest.javaに反映
+- 現状、SeleniumTestManager.java に未実装メソッド（createDriver, openBaseUrl, close, shutdown）があるため、「createDriver」、「openBaseUrl」、「shutdown」の3点はコンパイルエラーになっている
+
 ## 次の作業
-- SC-Iに改善提案を共有し、対応方針を協議予定
+- SeleniumTestManager 側の未実装メソッド実装を協議予定
