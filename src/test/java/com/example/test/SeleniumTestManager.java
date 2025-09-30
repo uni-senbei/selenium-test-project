@@ -1,6 +1,7 @@
 package com.example.test;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 
 public class SeleniumTestManager {
 
@@ -9,7 +10,7 @@ public class SeleniumTestManager {
     private String baseUrl;
 
     /**
-     * 統一的な設定注入ポイント
+     * TestConfigの設定
      */
     public void configure(TestConfig config) {
         this.config = config;
@@ -22,28 +23,45 @@ public class SeleniumTestManager {
         if (config == null) {
             throw new IllegalStateException("TestConfigが設定されていません。先にconfigure()を呼び出してください。");
         }
-        this.driver = config.createDriver();
+        this.driver = createDriver();
         this.baseUrl = config.getBaseUrl();
     }
 
     /**
-     * WebDriver を返す（SeleniumTest側から利用予定）
+     * WebDriverインスタンスを生成する最小実装
      */
+    public WebDriver createDriver() {
+        // TestConfig に実装されている createDriver() を呼ぶだけ
+        return config.createDriver();
+    }
+
+
+    /**
+     * baseUrl を開く（Step 2で実装予定）
+     */
+    public void openBaseUrl() {
+        // TODO: Step 2 で baseUrl を開く処理を実装
+    }
+
+    /**
+     * 各テスト後に呼び出すクローズ処理（Step 3で実装予定）
+     */
+    public void close() {
+        // TODO: Step 3 でリソース解放処理を実装
+    }
+
+    /**
+     * 全テスト完了後に呼び出すシャットダウン処理（Step 3で実装予定）
+     */
+    public void shutdown() {
+        // TODO: Step 3 で例外安全なシャットダウン処理を実装
+    }
+
     public WebDriver getDriver() {
         return driver;
     }
 
-    /**
-     * 指定URLを開く（SeleniumTest側から利用予定）
-     */
-    public void open(String url) {
-        // TODO: 実装はSTEP1-2で対応予定
-    }
-
-    /**
-     * ブラウザを閉じる（SeleniumTest側から利用予定）
-     */
-    public void close() {
-        // TODO: 実装はSTEP1-2で対応予定
+    public String getBaseUrl() {
+        return baseUrl;
     }
 }

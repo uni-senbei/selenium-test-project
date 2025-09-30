@@ -491,5 +491,20 @@
 - 作成した実装コードをSeleniumTest.javaに反映
 - 現状、SeleniumTestManager.java に未実装メソッド（createDriver, openBaseUrl, close, shutdown）があるため、「createDriver」、「openBaseUrl」、「shutdown」の3点はコンパイルエラーになっている
 
+## [SeleniumTestManager.javaの修正手順について方針を決定](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3349511508)
+- CMとSeleniumTest.javaの動作確認を行うために必要な最小限の修正方針を協議し、以下3点の対応を決定
+  - 1. 最小実装と実行確認：createDriver()を実装し、他のメソッドは空（スタブ）で実装する。
+  - 2. openBaseUrl()の実装：TestConfigのbaseUrlを使ったページ遷移ロジックを実装。
+  - 3. close()とshutdown()の実装：例外安全なリソース解放ロジックを実装。
+
+## [SeleniumTestManager.java のコード案を作成](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3349514060)
+- 協議結果をSC-Iに共有し、修正コードの作成を依頼
+
+## [WebDriverインスタンスの生成部分がTestConfig.javaの実装内容に即していなかったため修正](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3351349295)
+- 修正コードにTestConfig.javaで対応していないgetEdgeDriverPath()が含まれていたため修正を依頼
+
+## [SeleniumTestManager.javaに修正コードを反映](https://github.com/uni-senbei/selenium-test-project/blob/master/src/test/java/com/example/test/SeleniumTestManager.java)
+- TestConfig.javaの実装内容に合わせた修正案を反映
+
 ## 次の作業
-- SeleniumTestManager 側の未実装メソッド実装を協議予定
+- STEP2. openBaseUrl()の実装の詳細を協議予定
