@@ -506,5 +506,21 @@
 ## [SeleniumTestManager.javaに修正コードを反映](https://github.com/uni-senbei/selenium-test-project/blob/master/src/test/java/com/example/test/SeleniumTestManager.java)
 - TestConfig.javaの実装内容に合わせた修正案を反映
 
+## [「SeleniumTest.javaの動作確認のための最小限の修正」 にフォーカスして、STEP2を開始](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3355768919)
+- 最小限の修正で動作確認できるように依頼
+- SC-Iから出た提案は、SeleniumTest.javaの大幅な修正が必要なものだった
+- 改めてSC-Iと協議し、openBaseUrl(String path)をSeleniumTestManager.javaに追加するのみの修正に変更
+
+## [修正版 SeleniumTestManager.java（STEP2対応）を作成](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3355790913)
+- SC-Iとの合意に沿ってopenBaseUrl(String path)をSeleniumTestManager.javaに追加
+
+## [SeleniumTestManager.javaに修正を反映](https://github.com/uni-senbei/selenium-test-project/blob/master/src/test/java/com/example/test/SeleniumTestManager.java)
+- このコードでコンパイルエラーが解消されたためIntelliJ IDEAでテストを実行した結果エラー無く終了
+- 念のためコマンドラインでテストを実行したところ、こちらはエラーによりテスト本体の実行はされなかった
+
+## [コマンドラインで確認したエラー](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3355825499)
+- エラー内容は以下
+  - config.properties に baseUrl の設定がないか、空になっているため、TestConfig の初期化に失敗しました。
+
 ## 次の作業
-- STEP2. openBaseUrl()の実装の詳細を協議予定
+- SC-Iにエラー内容を共有し、対応方法を協議予定

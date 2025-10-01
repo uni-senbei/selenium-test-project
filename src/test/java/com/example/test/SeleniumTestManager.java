@@ -1,7 +1,6 @@
 package com.example.test;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
 
 public class SeleniumTestManager {
 
@@ -31,16 +30,17 @@ public class SeleniumTestManager {
      * WebDriverインスタンスを生成する最小実装
      */
     public WebDriver createDriver() {
-        // TestConfig に実装されている createDriver() を呼ぶだけ
         return config.createDriver();
     }
 
-
     /**
-     * baseUrl を開く（Step 2で実装予定）
+     * baseUrl を開く（将来的に引数なし版で統一予定）
      */
-    public void openBaseUrl() {
-        // TODO: Step 2 で baseUrl を開く処理を実装
+    public void openBaseUrl(String path) {
+        if (driver == null) {
+            throw new IllegalStateException("WebDriverが初期化されていません。setUp()を先に呼び出してください。");
+        }
+        driver.get(path);
     }
 
     /**
