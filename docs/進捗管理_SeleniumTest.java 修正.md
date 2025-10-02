@@ -522,5 +522,11 @@
 - エラー内容は以下
   - config.properties に baseUrl の設定がないか、空になっているため、TestConfig の初期化に失敗しました。
 
+## [config.propertiesを作成](https://github.com/uni-senbei/selenium-test-project/tree/master/config.properties)
+- SC-Iとの原因究明の結果、未作成の「config.properties」を呼び出していることが判明したため作成
+- コマンドラインでテストを実行したところ以下のエラー
+  - 「WebDriverが初期化されていません。setUp()を先に呼び出してください。」
+- 過去の更新履歴を確認したところ、途中まではSeleniumTest.javaの@Bforeに「 manager.setUp(); 」があったが、「@BeforeClass や TestRunner 側でまとめて初期化する」という設計検討が出て外したものの、初期化移行は未完了だった
+
 ## 次の作業
-- SC-Iにエラー内容を共有し、対応方法を協議予定
+- SC-Iに@Before に manager.setUp(); を戻す依頼を出す予定
