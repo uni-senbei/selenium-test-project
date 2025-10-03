@@ -528,5 +528,14 @@
   - 「WebDriverが初期化されていません。setUp()を先に呼び出してください。」
 - 過去の更新履歴を確認したところ、途中まではSeleniumTest.javaの@Bforeに「 manager.setUp(); 」があったが、「@BeforeClass や TestRunner 側でまとめて初期化する」という設計検討が出て外したものの、初期化移行は未完了だった
 
+## [「最小限の修正版 SeleniumTest.java」を作成](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3365133660)
+- setUp()の呼び出しを追加したSeleniumTest.javaの最小限の修正を依頼
+- 内容が大幅に変更されたSeleniumTest.javaを作成
+- SC-Iに確認したところ、参照する情報が増えすぎて若干混乱気味とのことなので、すぐには使わない情報をアーカイブ化するように依頼
+
+## [「最小限の修正版 SeleniumTest.java」を再作成](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3365297999)
+- アーカイブ化が完了したため再作成を依頼
+- 再作成は一度失敗した（この際も内容が大幅に変更された）が、変更した理由を聞いた所、その質問への回答はないものの依頼内容通りの最小限の修正を適用したSeleniumTest.javaを再作成
+
 ## 次の作業
-- SC-Iに@Before に manager.setUp(); を戻す依頼を出す予定
+- 修正コードを実装し、動作確認を実施予定
