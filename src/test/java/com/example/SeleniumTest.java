@@ -14,8 +14,7 @@ import static org.junit.Assert.*;
  *
  * 実装方針:
  *  - TestConfig を @BeforeClass で生成し manager に注入する
- *  - 各テスト前 ( @Before ) に manager.createDriver() で WebDriver を得て、
- *    manager.openBaseUrl(...) で対象ページを開く
+ *  - 各テスト前 ( @Before ) に manager.setUp() を呼び、manager.getDriver() で WebDriver を取得する（最小修正）
  *  - 各テスト後 ( @After ) に manager.close() を例外安全に呼ぶ
  *  - クラス終了時 ( @AfterClass ) に manager.shutdown() で最終クリーンアップ
  */
@@ -34,8 +33,9 @@ public class SeleniumTest {
 
     @Before
     public void setup() {
-        // 各テストごとに新しい WebDriver を生成（テストの独立性確保）
-        this.driver = manager.createDriver();
+        // ← ここを最小修正：manager.setUp() を呼び出して WebDriver を初期化させる
+        manager.setUp();                      // manager 側で driver を作成し baseUrl を設定
+        this.driver = manager.getDriver();    // 作られた driver を取得
 
         // テスト対象ページを開く（相対パス or クラスパス経由の論理名を manager に解決させる想定）
         // ここでは既存のファイルパス（テストリソース）を渡しています。

@@ -537,5 +537,18 @@
 - アーカイブ化が完了したため再作成を依頼
 - 再作成は一度失敗した（この際も内容が大幅に変更された）が、変更した理由を聞いた所、その質問への回答はないものの依頼内容通りの最小限の修正を適用したSeleniumTest.javaを再作成
 
+## [SeleniumTest.javaに修正版を反映](https://github.com/uni-senbei/selenium-test-project/blob/master/src/test/java/com/example/SeleniumTest.java)
+- SeleniumTest.javaに修正を反映し、コマンドラインでテストを実行
+- 今回は以下のエラーが発生したが、URLが渡せることは確認できたでこのステップは完了
+- 実行時に出たエラー
+```
+InvalidArgument invalid argument  
+Command: get {url=src/test/resources/input.html}  
+(Session info: chrome=141.0.7390.54)  
+Driver info: org.openqa.selenium.chrome.ChromeDriver  
+```
+- Selenium に相対パスを渡しているようで、`file:///` 形式の絶対パスが必要らしい
+- この部分の変換処理を再検討する必要がありそう
+
 ## 次の作業
-- 修正コードを実装し、動作確認を実施予定
+- close()/shutdown()の基本設計（擬似コード）の作成を依頼予定
