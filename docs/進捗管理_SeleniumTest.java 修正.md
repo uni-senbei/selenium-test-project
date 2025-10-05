@@ -550,5 +550,20 @@ Driver info: org.openqa.selenium.chrome.ChromeDriver
 - Selenium に相対パスを渡しているようで、`file:///` 形式の絶対パスが必要らしい
 - この部分の変換処理を再検討する必要がありそう
 
+## [「SeleniumTestManager：close() / shutdown() 設計方針ドキュメント（擬似コードつき）」を作成](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3368956205)
+- SC-Iにclose()/shutdown()の基本設計（擬似コード）の作成を依頼
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3368962534)
+- CMによるレビュー結果は懸念点はあるものの問題はなし
+
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3368964631)
+- SC-Dによるレビュー結果は改善提案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3368965734)
+- RV-Gによるレビュー結果は改善提案はあるものの問題はなし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3368967227)
+- RV-Cによるレビュー結果は改善提案はあるものの問題はなし
+
 ## 次の作業
-- close()/shutdown()の基本設計（擬似コード）の作成を依頼予定
+- SC-Iにレビュー結果を共有し、対応方針を協議予定
