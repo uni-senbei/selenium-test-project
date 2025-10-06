@@ -565,5 +565,21 @@ Driver info: org.openqa.selenium.chrome.ChromeDriver
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3368967227)
 - RV-Cによるレビュー結果は改善提案はあるものの問題はなし
 
+## [SeleniumTestManager.java（STEP 3対応版：close / shutdown実装）](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3370885943)
+- 今回の改善提案は反映しない事に決定
+- SC-IにSeleniumTestManager.javaの実装コード作成を依頼
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3370942240)
+- CMによるレビュー結果は2点の重要な課題を指摘
+
+## [SC-D（設計監督）視点での正式コードレビュー](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3370994863)
+- SC-Dによるレビュー結果は改善提案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](RV-Gのレビュー結果)
+- RV-Gによるレビュー結果は2つの決定的な後退と機能不適合を指摘
+
+## [RV-C コードレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3371064634)
+- RV-Cによるレビュー結果は改善提案はあるものの問題はなし
+
 ## 次の作業
 - SC-Iにレビュー結果を共有し、対応方針を協議予定
