@@ -581,5 +581,22 @@ Driver info: org.openqa.selenium.chrome.ChromeDriver
 ## [RV-C コードレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3371064634)
 - RV-Cによるレビュー結果は改善提案はあるものの問題はなし
 
+## [SeleniumTestManager.java実装コード](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3379784074)
+- 今回の問題の経緯としては、一度コードを書いてもらったがフィールド名が誤っていたため修正を依頼したところ、元のコードを参照せずにフィールド名以外が全て推論で出力されたために発生していた
+- 何度か修正を試したが、毎回SC-Iが元のコードを見つけられないため、元のコードを貼り付けて修正を依頼
+- 今回はフィールド名以外はそのまま保持できたので、各AIにレビューを依頼
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3379823638)
+- CMによるレビュー結果は改善提案はあるものの問題はなし
+
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3379854561)
+- SC-Dによるレビュー結果は改善提案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3379881065)
+- RV-Gによるレビュー結果は問題なし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3379980485)
+- RV-Cによるレビュー結果は改善提案はあるものの問題はなし
+
 ## 次の作業
 - SC-Iにレビュー結果を共有し、対応方針を協議予定
