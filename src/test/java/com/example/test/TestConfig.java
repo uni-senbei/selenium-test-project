@@ -81,4 +81,9 @@ public class TestConfig {
         }
         return normalized;
     }
+
+    // 追加: SeleniumTestManager との整合性を保つための最小限実装
+    public String getChromeDriverPath() {
+        return "drivers/chromedriver.exe"; // 暫定パス
+    }
 }

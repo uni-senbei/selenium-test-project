@@ -598,5 +598,18 @@ Driver info: org.openqa.selenium.chrome.ChromeDriver
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3379980485)
 - RV-Cによるレビュー結果は改善提案はあるものの問題はなし
 
+## [getEdgeDriverPath() を getChromeDriverPath() に修正](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3385028553)
+- レビューで getEdgeDriverPath() は getChromeDriverPath() ではないかと指摘されていた点のみ反映
+
+## [SeleniumTestManager.javaに実装](https://github.com/uni-senbei/selenium-test-project/blob/master/src/test/java/com/example/test/SeleniumTestManager.java)
+- 修正したコードを実装
+- getChromeDriverPathはTestConfig.javaには未実装のためコンパイルエラーの赤文字で表示された
+
+## [TestConfig.javaにgetChromeDriverPathを追加](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3385169433)
+- コンパイルエラー解消のため暫定的にgetChromeDriverPathを追加
+
+## [TestConfig.javaに実装](https://github.com/uni-senbei/selenium-test-project/blob/master/src/test/java/com/example/test/TestConfig.java)
+- この実装でSeleniumTestManager.javaのコンパイルエラーが解消されたことを確認
+
 ## 次の作業
-- SC-Iにレビュー結果を共有し、対応方針を協議予定
+- SeleniumTest.javaのテストを実行予定
