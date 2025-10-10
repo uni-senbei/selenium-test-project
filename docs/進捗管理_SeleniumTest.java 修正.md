@@ -611,5 +611,11 @@ Driver info: org.openqa.selenium.chrome.ChromeDriver
 ## [TestConfig.javaに実装](https://github.com/uni-senbei/selenium-test-project/blob/master/src/test/java/com/example/test/TestConfig.java)
 - この実装でSeleniumTestManager.javaのコンパイルエラーが解消されたことを確認
 
+## [SeleniumTest.javaのテストを実行]()
+- SeleniumTest.javaに新たなコンパイルエラー発生
+- 原因はSeleniumTestManager.javaに入れた修正により、SeleniumTest.javaの@Beforeにあるmanager.setUp()とthis.driver = manager.getDriver()
+- 念のためSC-Iに原因調査を依頼したところ、過去のやり取りが参照でいないようで、見当違いな修正案を提示
+- SC-Iに現状把握を詳細設計や修正ロードマップから最新の各ファイルの中身までしっかり目に行ってから改めて原因調査合を依頼したところ、「SeleniumTestManager.java（STEP 3対応版：close / shutdown実装）」時の元の対応（currentDriver修正前）に不備があった事が判明
+
 ## 次の作業
-- SeleniumTest.javaのテストを実行予定
+- SeleniumTestManager.javaの修正方針を決定予定
