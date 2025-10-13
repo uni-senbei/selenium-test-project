@@ -617,5 +617,29 @@ Driver info: org.openqa.selenium.chrome.ChromeDriver
 - 念のためSC-Iに原因調査を依頼したところ、過去のやり取りが参照でいないようで、見当違いな修正案を提示
 - SC-Iに現状把握を詳細設計や修正ロードマップから最新の各ファイルの中身までしっかり目に行ってから改めて原因調査合を依頼したところ、「SeleniumTestManager.java（STEP 3対応版：close / shutdown実装）」時の元の対応（currentDriver修正前）に不備があった事が判明
 
+## [SC-IのSeleniumTest.java修正方針](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3394118018)
+- SC-Iの混乱具合を確認するため、SeleniumTest.javaの修正方針を、現状の課題やどう修正するか等のまとめを依頼
+- この目的には、SC-Iの混乱状況把握に加え、これを各AIにレビュー依頼する事で、各AIの現状把握状況も含める
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3394275141)
+- CMによるレビュー結果は問題なし
+- SC-Iの認識の齟齬については、[この](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3349511508)方針に沿って相違点を指摘している
+
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3394303706)
+- SC-Dによるレビュー結果は軽微な注意点はあるものの問題なし
+- SC-Iの認識の齟齬については、WebDriverの生成責務の移譲に関してのみ指摘していて、軽微な齟齬としている
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3394316915)
+- RV-Gによるレビュー結果は問題なし
+- SC-Iの認識の齟齬については、[修正ロードマップ](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3239175309)を参考にしていると思われるが、より正確な現在の進行段階との差異を指摘している
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3394332913)
+- RV-Cによるレビュー結果は軽微な注意点はあるものの問題なし
+- SC-Iの認識の齟齬については、STEP段階の誤認とテストクラスとの責務関係の誤認を指摘していて、混乱は軽微としている
+- なおRV-C自身が書いたSTEPの説明は何を参照しているか不明だが、少なくとも現在の修正の流れは理解できている模様
+
+- 各AIのSC-Iの認識の齟齬については、共通して過去と現在の記憶が交錯している点を挙げている
+- 各レビュアーの認識については、CMとRV-Gは現在の流れを正確に把握できているようだが、SC-DとRV-Cについては今回のレビューコメントだけでは判断が難しい
+
 ## 次の作業
-- SeleniumTestManager.javaの修正方針を決定予定
+- これらを追っていく過程で曖昧だったMEの記憶も補強されたので、改めて今後の対策を検討予定
