@@ -641,5 +641,16 @@ Driver info: org.openqa.selenium.chrome.ChromeDriver
 - 各AIのSC-Iの認識の齟齬については、共通して過去と現在の記憶が交錯している点を挙げている
 - 各レビュアーの認識については、CMとRV-Gは現在の流れを正確に把握できているようだが、SC-DとRV-Cについては今回のレビューコメントだけでは判断が難しい
 
+## [SC-Iに現状把握を依頼](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3400878964)
+- SC-Iに修正ロードマップとSeleniumTest.javaの動作確認の流れに加え、CMからの認識齟齬の指摘を伝え、改めて把握し直してもらうよう依頼
+- この時点では全体的な流れは把握できたが、「今」やるべき[SeleniumTest 修正版 対応方針](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3394118018)が抜けている
+
+## [「今」やるべき事の認識齟齬を修正](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3400906854)
+- 改めて現在何をするべきなのかを伝えて現状の理解度を再確認
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3400993595)
+- SC-Iの認識齟齬を重大視したCMにはレビューを依頼し、SC-Iの認識齟齬が解消された事と、修正方針に誤りがない事を確認
+- ただし、今回の認識齟齬の解消は、暫定的に直近の齟齬を解消したのみなので、根本的な対策は別途考慮する必要がある
+
 ## 次の作業
-- これらを追っていく過程で曖昧だったMEの記憶も補強されたので、改めて今後の対策を検討予定
+- 改めてSeleniumTestManager.javaの暫定対応を再開予定
