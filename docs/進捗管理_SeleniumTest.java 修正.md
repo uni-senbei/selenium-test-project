@@ -652,5 +652,20 @@ Driver info: org.openqa.selenium.chrome.ChromeDriver
 - SC-Iの認識齟齬を重大視したCMにはレビューを依頼し、SC-Iの認識齟齬が解消された事と、修正方針に誤りがない事を確認
 - ただし、今回の認識齟齬の解消は、暫定的に直近の齟齬を解消したのみなので、根本的な対策は別途考慮する必要がある
 
+## [SeleniumTest.java の 動作確認を目的とした暫定対応版（setUp()／getDriver() を追加した）SeleniumTestManager.java](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3409896737)
+- 暫定対応版（setUp()／getDriver() を追加した）SeleniumTestManager.javaを作成
+
+## [CMのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3410002379)
+- CMによるレビュー結果は問題なし
+
+## [SC-Dのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3410007922)
+- SC-Dによるレビュー結果は改善提案はあるものの問題はなし
+
+## [RV-Gのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3410029638)
+- RV-Gによるレビュー結果は改善提案はあるものの問題はなし
+
+## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3410040253)
+- RV-Cによるレビュー結果は改善提案はあるものの問題はなし
+
 ## 次の作業
-- 改めてSeleniumTestManager.javaの暫定対応を再開予定
+- SeleniumTest.javaの動作確認を実施予定
