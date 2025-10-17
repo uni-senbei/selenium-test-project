@@ -2,12 +2,14 @@ package com.example.test;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import java.util.Objects;
 
 /**
  * SeleniumTestManager
  *
  * テスト全体の WebDriver ライフサイクル管理を担当。
+ *
+ * 現段階では動作確認を目的とした暫定実装であり、
+ * 今後のフェーズで createDriver()/openBaseUrl() 呼び出し方式へ置き換え予定。
  *
  * - STEP 1: 構成情報の読み込み（TestConfig 経由）
  * - STEP 2: openBaseUrl() によるテストページ起動
@@ -78,5 +80,24 @@ public class SeleniumTestManager {
         }
 
         System.out.println("[INFO] SeleniumTestManager shutdown complete.");
+    }
+
+    // ==========================================================
+    // 🔧 暫定対応: SeleniumTest.java の setUp()/getDriver() 呼び出し互換用
+    // ==========================================================
+
+    /** 暫定: setUp() - WebDriverの生成をラップ */
+    public void setUp() {
+        if (driver == null) {
+            createDriver();
+        }
+    }
+
+    /** 暫定: getDriver() - SeleniumTest用の参照取得 */
+    public WebDriver getDriver() {
+        if (driver == null) {
+            throw new IllegalStateException("WebDriverが初期化されていません。setUp()を先に呼び出してください。");
+        }
+        return driver;
     }
 }

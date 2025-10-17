@@ -667,5 +667,11 @@ Driver info: org.openqa.selenium.chrome.ChromeDriver
 ## [RV-Cのレビュー結果](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3410040253)
 - RV-Cによるレビュー結果は改善提案はあるものの問題はなし
 
+## [SeleniumTestManager.javaに実装コードを反映](https://github.com/uni-senbei/selenium-test-project/blob/master/src/test/java/com/example/test/SeleniumTestManager.java)
+- SeleniumTest.javaのコンパイルエラーが解消されたことと、その他のコンパイルエラーが出ていない事を確認
+- コマンドラインでmvn -Dtest=SeleniumTest testを実行
+- chromedriver.exeが見つからないというエラーが発生
+- TestConfig.javaを確認したところ、存在しないdriverと言うパスが指定されていた
+
 ## 次の作業
-- SeleniumTest.javaの動作確認を実施予定
+- chromedriver.exeが存在する正しいパスに書き換えるか、見つからない場合は改めてchromedriver.exeをダウンロードしてdriverフォルダ内に配置する予定
