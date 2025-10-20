@@ -673,5 +673,9 @@ Driver info: org.openqa.selenium.chrome.ChromeDriver
 - chromedriver.exeが見つからないというエラーが発生
 - TestConfig.javaを確認したところ、存在しないdriverと言うパスが指定されていた
 
+## chromedriver.exeを用意してテストを実行
+- driversというディレクトリを作成し、chromedriver.exeをコピーしてきてテストを再実行
+- ブラウザ起動→テスト実行→ブラウザ終了が計5回実行された事を確認
+
 ## 次の作業
-- chromedriver.exeが存在する正しいパスに書き換えるか、見つからない場合は改めてchromedriver.exeをダウンロードしてdriverフォルダ内に配置する予定
+- ここまでで階層化と動作確認が成功したため、一旦各AIと振り返りを実施して今後の方針を策定予定
