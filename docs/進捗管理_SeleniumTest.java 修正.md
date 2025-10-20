@@ -674,8 +674,32 @@ Driver info: org.openqa.selenium.chrome.ChromeDriver
 - TestConfig.javaを確認したところ、存在しないdriverと言うパスが指定されていた
 
 ## chromedriver.exeを用意してテストを実行
+
+## [テスト実行の成功と振り返りの実施](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3421498089)
 - driversというディレクトリを作成し、chromedriver.exeをコピーしてきてテストを再実行
 - ブラウザ起動→テスト実行→ブラウザ終了が計5回実行された事を確認
+- 各AIに以下2点を依頼
+  - 各AI視点での「STEP2 詳細設計ドラフト（SeleniumTest.java修正・先取り版）」から「setUp()／getDriver() を追加した暫定対応版のSeleniumTestManager.javaを実装してテストに成功」した所までのタスク完了報告を依頼
+  - 過去を参照できなくなっている場合に、余計な推論が入らないよう「○○以前は参照できない」と宣言する事を依頼
+
+## [SC-Dのタスク完了報告](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3421520449)
+- 参照できる範囲については直近のみのような書き方になっている
+- 本タスクの初期に作成した設計構想ドキュメントにも言及しているが、確かに内容はあまり把握できていない印象
+- 成果や課題についての報告も直近の内容が主になっている
+
+## [SC-Iのタスク完了報告](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3421574526)
+- 2025年7月以前の一部履歴が参照できないと報告しているが、SC-IがSCから分離されたのは8月なので影響はない（はず）
+- 「タスク実施範囲」や「成果」の報告があるが、直近の混乱以前への言及は無いように見受けられる
+
+## [RV-Gのタスク完了報告](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3421600124)
+- 成果と課題については、他AIより比較的網羅的に報告
+- 報告内容には大きな認識の齟齬は見当たらない
+
+## [RV-Cのタスク完了報告](https://github.com/uni-senbei/selenium-test-project/issues/3#issuecomment-3421629519)
+- RV-Cも参照できるのは2025-07以降の記録との事（RV-CとSC-DはどちらもChatGPTの為、関連性については別途考慮が必要）
+- 成果や課題についての報告も直近の内容が主になっている（結果的にChatGPT系は全て直近の報告が主になっているため、個々の関連性も別途考慮が必要）
+- 負荷についての報告にはRV-C自身が「構造追跡よりも文脈整理の方に時間を取られた」との報告も含まれている
 
 ## 次の作業
-- ここまでで階層化と動作確認が成功したため、一旦各AIと振り返りを実施して今後の方針を策定予定
+- 各AIのタスク完了報告を分析予定
+- なおCMについては別途振り返りを行う予定
